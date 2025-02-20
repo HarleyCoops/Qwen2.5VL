@@ -1,124 +1,39 @@
-name: Documentation Automation
+name: Learning Documentation Update
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'  # Every 15 minutes
+  workflow_dispatch:         # Manual trigger option
 
 jobs:
   document:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
-
+    
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-
-    - name: Setup GitHub Copilot CLI
-      run: |
-        npm install -g @githubnext/github-copilot-cli
-        npm install -g @githubnext/github-copilot-cli-core
-      env:
-        GITHUB_TOKEN: ${{ secrets.COPILOT_TOKEN }}
-
-    - name: Check Documentation Coverage
-      run: |
-        # Check for docstrings and documentation in Python files
-        python -m doctest **/*.py
-        python -m pydoc -w .
-
-    - name: Generate Documentation Updates
-      run: |
-        # Use GitHub Copilot to suggest documentation improvements
-        gh copilot suggest "Review and improve documentation in:"
-        find . -type f -name "*.py" -exec gh copilot suggest "Improve documentation in {}" \;
-      env:
-        GH_TOKEN: ${{ secrets.COPILOT_TOKEN }}
-        COPILOT_TOKEN: ${{ secrets.COPILOT_TOKEN }}
-
-    - name: Validate Model Cards
-      run: |
-        # Run our model card validator on all .md files in model_cards directory
-        python tools/validators/model_card_validator.py implementation/model_cards/*.md
-
-    - name: Update Progress Tracking
-      run: |
-        # Update PROGRESS.md with new changes
-        python tools/update_progress.py
-
-    - name: Create Documentation PR
-      uses: peter-evans/create-pull-request@v5
-      with:
-        commit-message: "docs: Update documentation with Copilot suggestions"
-        title: "Documentation Updates"
-        body: |
-          This PR contains automated documentation updates generated with GitHub Copilot assistance.
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0     # Get full history for better documentation
           
-          Changes include:
-          - Documentation coverage improvements
-          - Model card validations
-          - Progress tracking updates
+      - name: Update and Push Changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
           
-          Please review the changes and merge if appropriate.
-        branch: docs/automated-updates
-        delete-branch: true
-        labels: documentation
-
-    - name: Check Links
-      uses: gaurav-nelson/github-action-markdown-link-check@v1
-      with:
-        use-quiet-mode: 'yes'
-        use-verbose-mode: 'yes'
-        folder-path: '.'
-
-    - name: Run markdownlint
-      uses: nosborn/github-action-markdown-cli@v3.3.0
-      with:
-        files: .
-        config: .markdownlint.json
-        ignore: node_modules
-
-    - name: Generate Documentation Site
-      run: |
-        # Build documentation site using mkdocs
-        mkdocs build
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    - name: Deploy Documentation
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./site
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    - name: Notify on Failure
-      if: failure()
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.rest.issues.create({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            title: 'Documentation Workflow Failed',
-            body: 'The documentation automation workflow has failed. Please check the logs for more details.'
-          })
+          # Get timestamp for commit message
+          TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+          
+          # Add all changes
+          git add .
+          
+          # Commit with detailed message including timestamp
+          git commit -m "Learning Progress Update: $TIMESTAMP
+          
+          Documentation Updates:
+          - Updated README and learning notes
+          - Tracked progress in Qwen2.5-VL understanding
+          - Captured new insights and examples" || echo "No changes to commit"
+          
+          # Push changes
+          git push
