@@ -1,4 +1,4 @@
-# Qwen2.5-VL Educational Project
+# Qwen2.5-VL
 
 ## Overview
 An educational exploration of the Qwen2.5-VL model, focusing on understanding model cards, implementation details, and practical applications. This project combines academic research with hands-on implementation guides.
