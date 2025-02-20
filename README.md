@@ -240,8 +240,94 @@ cp .env.template .env
    - Cost optimization strategies
    - Advanced use case implementations
 
+## Automated Documentation & Development
+
+### GitHub Actions Workflow
+
+Our project uses GitHub Actions for automated documentation and development workflows:
+
+#### Trigger Events
+- On push to main branch
+- On pull request to main branch
+- Manual trigger (workflow_dispatch)
+
+#### Automated Tasks
+
+1. **Documentation Coverage**
+   - Frequency: Every push/PR
+   - Tasks:
+     - Python docstring validation
+     - Documentation generation with pydoc
+     - Markdown link checking
+     - Documentation site building
+
+2. **GitHub Copilot Integration**
+   - Frequency: Every push/PR
+   - Tasks:
+     - Documentation improvement suggestions
+     - Code documentation review
+     - Automated documentation updates
+
+3. **Model Card Validation**
+   - Frequency: Every push/PR
+   - Tasks:
+     - Structure validation
+     - Required sections check
+     - Metrics verification
+     - Placeholder detection
+
+4. **Progress Tracking**
+   - Frequency: Every push/PR
+   - Tasks:
+     - PROGRESS.md updates
+     - Task completion tracking
+     - Milestone documentation
+
+5. **Quality Checks**
+   - Frequency: Every push/PR
+   - Tasks:
+     - Markdown linting
+     - Link validation
+     - Documentation formatting
+
+#### Automated Outputs
+
+1. **Documentation PRs**
+   - Auto-generated pull requests for documentation updates
+   - Copilot-suggested improvements
+   - Progress tracking updates
+
+2. **Documentation Site**
+   - Auto-deployed to GitHub Pages
+   - Updated on main branch pushes
+   - Includes latest documentation changes
+
+3. **Failure Notifications**
+   - Automatic issue creation on workflow failures
+   - Detailed error reporting
+   - Quick problem identification
+
+### Development Workflow
+
+1. **Local Development**
+   - Run `pip install -r requirements.txt` for dependencies
+   - Copy `.env.template` to `.env` and configure
+   - Follow documentation standards in `.markdownlint.json`
+
+2. **Contributing**
+   - Create feature branch
+   - Make changes
+   - Push to trigger automated checks
+   - Review automated suggestions
+   - Submit PR for review
+
+3. **Documentation**
+   - Follow model card templates
+   - Update PROGRESS.md
+   - Add docstrings to code
+   - Review automated suggestions
+
 ## Contributing
-Guidelines for contributing will be added soon.
 
 ## License
 MIT License
