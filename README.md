@@ -272,9 +272,19 @@ cp .env.template .env
 Our project uses GitHub Actions for automated documentation and development workflows:
 
 #### Trigger Events
+- Every 15 minutes (automated updates)
 - On push to main branch
 - On pull request to main branch
 - Manual trigger (workflow_dispatch)
+
+#### Automated Documentation
+The system automatically:
+- Updates documentation every 15 minutes
+- Tracks learning progress in PROGRESS.md
+- Validates model cards and documentation
+- Creates PRs for documentation updates
+- Deploys documentation site
+- Notifies on any failures
 
 #### Automated Tasks
 
