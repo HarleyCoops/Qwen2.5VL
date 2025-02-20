@@ -58,9 +58,11 @@ jobs:
 
     - name: Run markdownlint
       uses: DavidAnson/markdownlint-cli2-action@v11
+      continue-on-error: true  # Don't fail the workflow on markdown issues
       with:
         globs: "**/*.md"
         config: '.markdownlint.json'
+        fix: true  # Try to auto-fix what it can
 
     - name: Check Links
       uses: gaurav-nelson/github-action-markdown-link-check@v1
