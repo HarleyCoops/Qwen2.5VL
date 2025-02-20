@@ -1,7 +1,21 @@
 # Qwen2.5-VL
 
 ## Overview
-An educational exploration of the Qwen2.5-VL model, focusing on understanding model cards, implementation details, and practical applications. This project combines academic research with hands-on implementation guides.
+An educational exploration of the Qwen2.5-VL model, focusing on understanding model cards, implementation details, and practical applications. This project combines academic research with hands-on implementation guides and integrates with multiple inference providers for comprehensive access to the model.
+
+### Inference Providers Integration
+This project aims to provide comprehensive access to Qwen2.5-VL through multiple inference providers:
+
+- **OpenRouter**: Primary integration for accessing the model
+- **Hugging Face Inference Endpoints**: Direct access through HF's inference API
+- **Hyperbolic AI**: Specialized integration for enhanced performance
+- **Additional Providers**:
+  - RunPod
+  - Together AI
+  - Anyscale
+  - Replicate
+
+Each provider offers unique advantages and capabilities, allowing users to choose the most suitable option for their specific needs.
 
 ## Project Structure
 
@@ -59,14 +73,29 @@ An educational exploration of the Qwen2.5-VL model, focusing on understanding mo
 
 ### Prerequisites
 - Python 3.8+
-- OpenRouter API access
 - Git
+- API access to one or more providers:
+  - OpenRouter API key
+  - Hugging Face API key
+  - Hyperbolic AI API key
+  - Additional provider API keys as needed
 
 ### Installation
 ```bash
+# Clone the repository
 git clone https://github.com/HarleyCoops/Qwen2.5VL.git
 cd Qwen2.5VL
-# Additional setup instructions will be added
+
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+cp .env.template .env
+# Edit .env with your API keys
 ```
 
 ## Project Goals
@@ -75,16 +104,25 @@ cd Qwen2.5VL
    - Comprehensive breakdown of Qwen2.5-VL's architecture
    - Clear explanation of key innovations
    - Practical implementation guides
+   - Integration patterns for multiple providers
 
 2. **Technical Implementation**
    - Model card creation and validation
-   - OpenRouter API integration
+   - Multi-provider API integration
    - Practical application examples
+   - Performance comparison across providers
 
 3. **Best Practices**
    - Model card standards
    - API usage patterns
    - Performance optimization
+   - Provider selection guidelines
+
+4. **Future Development**
+   - Integration with additional inference providers
+   - Performance benchmarking across providers
+   - Cost optimization strategies
+   - Advanced use case implementations
 
 ## Contributing
 Guidelines for contributing will be added soon.
