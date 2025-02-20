@@ -425,6 +425,48 @@ Our project uses GitHub Actions for automated documentation and development work
    - Monitor documentation updates
    - Review automated commits
 
+### Workflow Timing and Monitoring
+
+#### Automatic Triggers
+The documentation automation workflow runs:
+1. **On Every Push to Main**:
+   - Immediate trigger when code is pushed
+   - Full documentation cycle (~5-10 minutes)
+   - Creates PR with updates if needed
+
+2. **On Pull Requests**:
+   - Triggers when PR is opened/updated
+   - Validates documentation
+   - Suggests improvements
+
+3. **Manual Trigger**:
+   - Available through Actions tab
+   - Can be run on-demand
+   - Useful for forcing documentation updates
+
+#### Monitoring Progress
+1. **Immediate Feedback**:
+   - Check GitHub Actions tab after push
+   - Look for green checkmark (✓) or red cross (×)
+   - Initial status within 1-2 minutes
+
+2. **Documentation PRs**:
+   - Created automatically if changes needed
+   - Usually appear 5-10 minutes after push
+   - Tagged with "documentation" label
+
+3. **Notification Points**:
+   - GitHub notification on workflow completion
+   - Email on workflow failure
+   - PR creation notification
+   - Issue creation for failures
+
+4. **Success Indicators**:
+   - Green checkmark in Actions tab
+   - Documentation PR created (if needed)
+   - Updated documentation site
+   - No failure notifications
+
 ### Troubleshooting
 
 1. **Workflow Failures**:
