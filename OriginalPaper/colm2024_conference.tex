@@ -1,0 +1,498 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{colm2024_conference}
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{natbib}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{supertabular}
+\usepackage{CJKutf8}
+\usepackage[utf8]{inputenc} % optional
+\usepackage[T1]{fontenc}
+\usepackage[french,vietnamese,mongolian,greek,english]{babel}
+\usepackage{pifont}
+
+\usepackage{enumitem}
+\usepackage{tablefootnote}
+% \usepackage{colortbl}
+\usepackage{xspace}
+\usepackage{textcomp}
+\usepackage{makecell}
+\usepackage{lscape} 
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% 设置lstlisting环境的样式
+\lstset{
+  basicstyle=\ttfamily\small,
+  frame=single,
+  showstringspaces=false,
+  commentstyle=\color{gray},
+  keywordstyle=\color{blue}
+}
+
+\setlength{\columnsep}{2em}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.7em}
+\definecolor{dt}{gray}{0.7}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\usepackage{pifont}       % \ding{xx}
+\usepackage{bbding}       % \Checkmark,\XSolid,... (需要和pifont宏包共同使用)
+\usepackage{fontawesome}
+
+\usepackage{scrextend}
+
+\usepackage{tgpagella}
+% \usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\definecolor{mydarkblue}{rgb}{0,0.08,0.45}
+\definecolor{citecolor}{HTML}{0071BC}
+\usepackage{url}            % simple URL typesetting
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{changepage}
+\usepackage{xargs}          % Use more than one optional parameter in a new commands
+\usepackage{wrapfig,lipsum,booktabs}
+\usepackage{longtable}
+\usepackage{subcaption}
+% \usepackage[symbol]{footmisc}
+\usepackage{endnotes}
+% \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\usepackage{pgfplots}
+\usetikzlibrary{pgfplots.groupplots}
+\pgfplotsset{compat=1.3}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+
+\usepackage[most]{tcolorbox}
+
+\usepackage[capitalize,noabbrev]{cleveref}
+\crefname{section}{Section}{\S\S}
+\Crefname{section}{Section}{\S\S}
+\crefname{table}{Table}{Tables}
+\crefname{figure}{Figure}{Figures}
+\crefname{algorithm}{Algorithm}{}
+\crefname{equation}{eq.}{}
+\crefname{appendix}{Appendix}{}
+\crefformat{section}{Section #2#1#3}
+\usepackage{multicol}
+\usepackage{tcolorbox}
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% Attempt to make hyperref and algorithmic work together better:
+%\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\concat}{concat}
+\DeclareMathOperator{\layernorm}{LayerNorm}
+
+%\input{math_commands.tex}
+% update link here
+% \renewcommand{\hflink}{}
+% \renewcommand{\ghlink}{}
+
+\title{Qwen2.5-VL Technical Report}
+
+
+
+\author{
+\bf Qwen Team, Alibaba Group}
+
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We introduce Qwen2.5-VL, the latest flagship model of Qwen vision-language series, which demonstrates significant advancements in both foundational capabilities and innovative functionalities. Qwen2.5-VL achieves a major leap forward in understanding and interacting with the world through enhanced visual recognition, precise object localization, robust document parsing, and long-video comprehension.
+A standout feature of Qwen2.5-VL is its ability to localize objects using bounding boxes or points accurately. It provides robust structured data extraction from invoices, forms, and tables, as well as detailed analysis of charts, diagrams, and layouts. To handle complex inputs, Qwen2.5-VL introduces dynamic resolution processing and absolute time encoding, enabling it to process images of varying sizes and videos of extended durations (up to hours) with second-level event localization. This allows the model to natively perceive spatial scales and temporal dynamics without relying on traditional normalization techniques.
+By training a native dynamic-resolution Vision Transformer (ViT) from scratch and incorporating Window Attention, we have significantly reduced computational overhead while maintaining native resolution. As a result, Qwen2.5-VL excels not only in static image and document understanding but also as an interactive visual agent capable of reasoning, tool usage, and task execution in real-world scenarios such as operating computers and mobile devices. The model achieves strong generalization across domains without requiring task-specific fine-tuning.
+Qwen2.5-VL is available in three sizes, addressing diverse use cases from edge AI to high-performance computing. The flagship Qwen2.5-VL-72B model matches state-of-the-art models like GPT-4o and Claude 3.5 Sonnet, particularly excelling in document and diagram understanding. The smaller Qwen2.5-VL-7B and Qwen2.5-VL-3B models outperform comparable competitors, offering strong capabilities even in resource-constrained environments. Additionally, Qwen2.5-VL maintains robust linguistic performance, preserving the core language competencies of the Qwen2.5 LLM.
+\end{abstract}
+\begin{figure*}[ht]
+\centering
+\includegraphics[width= 1\linewidth]{figures/head.jpg}
+\end{figure*}
+
+\section{Introduction}
+\input{content/introduction.tex}
+
+\section{Approach}
+
+In this section, we first outline the architectural updates of the Qwen2.5-VL series models and provide an overview of the data and training details. 
+% The Qwen2.5-VL series comprises three model variants with parameter sizes of 4B, 8B, and 73B. To better align with the naming conventions of the underlying Qwen large language models (LLMs), the models in the Qwen2.5-VL series are named according to the parameter counts of their corresponding LLMs. Thus, the series includes Qwen2.5-VL-72B, Qwen2.5-VL-7B, and Qwen2.5-VL-3B. This naming approach ensures consistency and clarity in identifying the specific configurations of the vision-language models.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width= 1\linewidth]{figures/qwen2.5vl_arc.jpeg}
+   \caption{The Qwen2.5-VL framework demonstrates the integration of a vision encoder and a language model decoder to process multimodal inputs, including images and videos. The vision encoder is designed to handle inputs at their native resolution and supports dynamic FPS sampling. Images of varying sizes and video frames with different FPS rates are dynamically mapped to token sequences of varying lengths. Notably, MRoPE aligns time IDs with absolute time along the temporal dimension, enabling the model to better comprehend temporal dynamics, such as the pace of events and precise moment localization. The processed visual data is subsequently fed into the Qwen2.5 LM Decoder. We have re-engineered the vision transformer (ViT) architecture, incorporating advanced components such as FFN with SwiGLU activation, RMSNorm for normalization, and window-based attention mechanisms to enhance performance and efficiency.
+}
+\label{fig:arc}
+\end{figure*}
+
+
+\subsection{Model Architecture}
+The overall model architecture of Qwen2.5-VL consists of three components:
+
+\textbf{Large Language Model}: The Qwen2.5-VL series adopts large language models as its foundational component. The model is initialized with pre-trained weights from the Qwen2.5 LLM. To better meet the demands of multimodal understanding, we have modified the 1D RoPE (Rotary Position Embedding) to our Multimodal Rotary Position Embedding Aligned to Absolute Time.
+
+\textbf{Vision Encoder}: The vision encoder of Qwen2.5-VL employs a redesigned Vision Transformer (ViT) architecture. Structurally, we incorporate 2D-RoPE and window attention to support native input resolutions while accelerating the computation of the entire visual encoder. During both training and inference, the height and width of the input images are resized to multiples of 28 before being fed into the ViT. The vision encoder processes images by splitting them into patches with a stride of 14, generating a set of image features. We provide a more detailed introduction to the vision encoder in Section~\ref{sec:VisionEncoder}.
+
+\textbf{MLP-based Vision-Language Merger}: To address the efficiency challenges posed by long sequences of image features, we adopt a simple yet effective approach to compress the feature sequences before feeding them into the large language model (LLM). Specifically, instead of directly using the raw patch features extracted by the Vision Transformer (ViT), we first group spatially adjacent sets of four patch features. These grouped features are then concatenated and passed through a two-layer multi-layer perceptron (MLP) to project them into a dimension that aligns with the text embeddings used in the LLM. This method not only reduces computational costs but also provides a flexible way to dynamically compress image feature sequences of varying lengths.
+
+In Table~\ref{table:config}, the architecture and configuration of Qwen2.5-VL are detailed.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Configuration} & \textbf{Qwen2.5-VL-3B} & \textbf{Qwen2.5-VL-7B} & \textbf{Qwen2.5-VL-72B} \\ \midrule
+\multicolumn{4}{c}{\textbf{Vision Transformer (ViT) }} \\ \midrule
+Hidden Size & 1280 & 1280 & 1280 \\
+\# Layers & 32 & 32 & 32 \\
+\# Num Heads & 16 & 16 & 16 \\
+Intermediate Size & 3456 & 3456 & 3456 \\
+Patch Size & 14 & 14 & 14 \\
+Window Size & 112 & 112 & 112 \\
+Full Attention Block Indexes & \{7, 15, 23, 31\} & \{7, 15, 23, 31\} & \{7, 15, 23, 31\} \\ \midrule
+\multicolumn{4}{c}{\textbf{Vision-Language Merger}} \\  \midrule
+In Channel & 1280 & 1280 & 1280 \\
+Out Channel & 2048 & 3584 & 8192 \\ \midrule
+\multicolumn{4}{c}{\textbf{Large Language Model (LLM) }} \\ \midrule
+Hidden Size & 2048 & 3,584 & 8192 \\
+\# Layers & 36 & 28 & 80 \\
+\# KV Heads & 2 & 4 & 8 \\
+Head Size & 128 & 128 & 128 \\
+Intermediate Size & 4864 & 18944 & 29568 \\
+Embedding Tying & \ding{51} & \ding{55} & \ding{55} \\
+Vocabulary Size & 151646 & 151646 & 151646 \\
+\# Trained Tokens & 4.1T & 4.1T & 4.1T \\ 
+
+\bottomrule
+\end{tabular}
+\caption{Configuration of Qwen2.5-VL.}
+\label{table:config}
+\end{table}
+
+
+
+\subsubsection{Fast and Efficient Vision Encoder}
+\label{sec:VisionEncoder}
+
+The vision encoder plays a pivotal role in multimodal large language models (MLLMs). To address the challenges posed by computational load imbalances during training and inference due to native resolution inputs, we have redesigned the Vision Transformer (ViT) architecture. A key issue arises from the quadratic computational complexity associated with processing images of varying sizes. To mitigate this, we introduce windowed attention in most layers, which ensures that computational cost scales linearly with the number of patches rather than quadratically. In our architecture, only four layers employ full self-attention, while the remaining layers utilize windowed attention with a maximum window size of 112×112 (corresponding to 8×8 patches). Regions smaller than 112×112 are processed without padding, preserving their original resolution. This design allows the model to operate natively at the input resolution, avoiding unnecessary scaling or distortion.
+
+For positional encoding, we adopt 2D Rotary Positional Embedding (RoPE) to effectively capture spatial relationships in 2D space. Furthermore, to better handle video inputs, we extend our approach to 3D patch partitioning. Specifically, we use 14×14 image patches as the basic unit, consistent with traditional ViTs for static images. For video data, two consecutive frames are grouped together, significantly reducing the number of tokens fed into the language model. This design not only maintains compatibility with existing architectures but also enhances efficiency when processing sequential video data.
+
+To streamline the overall network structure, we align the ViT architecture more closely with the design principles of large language models (LLMs). Specifically, we adopt RMSNorm~\citep{rmsnorm} for normalization and SwiGLU~\citep{glu} as the activation function. These choices enhance both computational efficiency and compatibility between the vision and language components of the model.
+
+In terms of training, we train the redesigned ViT from scratch. The training process consists of several stages, including CLIP pre-training, vision-language alignment, and end-to-end fine-tuning. To ensure robustness across varying input resolutions, we employ dynamic sampling at native resolutions during training. Images are randomly sampled according to their original aspect ratios, enabling the model to generalize effectively to inputs of diverse resolutions. This approach not only improves the model's adaptability but also ensures stable and efficient training across different sizes of visual data. 
+
+\subsubsection{Native Dynamic Resolution and Frame Rate}
+
+Qwen2.5-VL introduces advancements in both spatial and temporal dimensions to handle diverse multimodal inputs effectively.
+
+In the spatial domain, Qwen2.5-VL dynamically converts images of varying sizes into sequences of tokens with corresponding lengths. Unlike traditional approaches that normalize coordinates, our model directly uses the actual dimensions of the input image to represent bounding boxes, points, and other spatial features. This allows the model to learn scale information inherently, improving its ability to process images across different resolutions.
+
+For video inputs, Qwen2.5-VL incorporates dynamic frame rate (FPS) training and absolute time encoding. By adapting to variable frame rates, the model can better capture the temporal dynamics of video content.
+Unlike other approaches that incorporate textual timestamps or utilize additional heads to enable temporal grounding, we introduce a novel and efficient strategy that aligns MRoPE IDs directly with the timestamps. This approach allows the model to understand the tempo of time through the intervals between temporal dimension IDs, without necessitating any additional computational overhead.
+% Absolute time encoding provides the model with precise timing information, enabling it to reason about events occurring at specific moments within a video sequence.
+
+
+\subsubsection{Multimodal Rotary Position Embedding Aligned to Absolute Time}
+
+Positional embeddings are crucial for modeling sequential data in both vision and language modalities. Building upon the Multimodal Rotary Position Embedding (MRoPE) introduced in Qwen2-VL, we extend its capabilities to better handle temporal information in videos.
+
+The MRoPE in Qwen2-VL decomposes the position embedding into three distinct components: temporal, height, and width to effectively model multimodal inputs. For textual inputs, all three components use identical position IDs, making MRoPE functionally equivalent to traditional 1D RoPE~\citep{rope}. For images, the temporal ID remains constant across visual tokens, while unique IDs are assigned to the height and width components based on each token's spatial position within the image. When processing videos, which are treated as sequences of frames, the temporal ID increments for each frame, while the height and width components follow the same assignment pattern as for static images.
+
+However, in Qwen2-VL, the temporal position IDs in MRoPE were tied to the number of input frames, which did not account for the speed of content changes or the absolute timing of events within the video. To address this limitation, Qwen2.5-VL introduces a key improvement: aligning the temporal component of MRoPE with absolute time. As shown in Figure~\ref{fig:arc}, by leveraging the intervals between temporal IDs, the model is able to learn consistent temporal alignment across videos with different FPS sampling rates.
+
+
+\subsection{Pre-Training}
+In this section, we first describe the construction of the pre-training dataset, followed by an overview of the overall training pipeline and configuration.
+\subsubsection{Pre-Training Data}
+Compared to Qwen2-VL, we have significantly expanded the volume of our pre-training data, increasing it from 1.2 trillion tokens to approximately 4 trillion tokens. Our pre-training dataset was constructed through a combination of methods, including cleaning raw web data, synthesizing data, etc. The dataset encompasses a wide variety of multimodal data, such as image captions, interleaved image-text data, optical character recognition (OCR) data, visual knowledge (e.g., celebrity, landmark, flora, and fauna identification), multi-modal academic questions, localization data, document parsing data, video descriptions, video localization, and agent-based interaction data. Throughout the training process, we carefully adjusted the composition and proportions of these data types at different stages to optimize learning outcomes.
+
+
+
+
+
+\paragraph{Interleaved Image-Text Data}
+Interleaved image-text data is essential for multimodal learning, offering three key benefits: (1) enabling in-context learning with simultaneous visual and textual cues~\citep{flamingo}, (2) maintaining strong text-only capabilities when images are missing~\citep{lin2024vila}, and (3) containing a wide range of general information. However, much of the available interleaved data lacks meaningful text-image associations and is often noisy, limiting its usefulness for complex reasoning and creative generation.
+
+To address these challenges, we developed a pipeline for scoring and cleaning data, ensuring only high-quality, relevant interleaved data is used. Our process involves two steps: standard data cleaning~\citep{li2024omnicorpus} followed by a four-stage scoring system using an internal evaluation model. The scoring criteria include: (1) text-only quality, (2) image-text relevance, (3) image-text complementarity, and (4) information density balance. This meticulous approach improves the model’s ability to perform complex reasoning and generate coherent multimodal content.
+
+The following is a description of these image-text scoring criteria:
+
+Image-text Relevance: A higher score indicates a stronger connection between the image and text, where the image meaningfully supplements, explains or expands on the text rather than just decorating it.
+
+Information Complementarity: A higher score reflects greater complementary information between the image and text. Each should provide unique details that together create a complete narrative.
+
+Balance of Information Density: A higher score means a more balanced distribution of information between the image and text, avoiding excessive text or image information, and ensuring an appropriate balance between the two.
+
+
+\paragraph{Grounding Data with Absolute Position Coordinates}
+We adopt native resolution training with the aim of achieving a more accurate perception of the world. In contrast, relative coordinates fail to effectively represent the original size and position of objects within images. To address this limitation, Qwen2.5-VL uses coordinate values based on the actual dimensions of the input images during training to represent bounding boxes and points. This approach ensures that the model can better capture the real-world scale and spatial relationships of objects, leading to improved performance in tasks such as object detection and localization.
+
+%data format and pipeline
+To improve the generalizability of grounding capabilities, we have developed a comprehensive dataset encompassing bounding boxes and points with referring expressions, leveraging both publicly available datasets and proprietary data. 
+Our methodology involves synthesizing data into various formats, including XML, JSON, and custom formats, employing techniques such as copy-paste augmentation~\citep{ghiasi2021simple} and synthesis with off-the-shelf models such as Grounding DINO~\citep{grounding_dino} and SAM~\citep{kirillov2023segment}. This approach facilitates a more robust evaluation and advancement of grounding abilities.
+
+To enhance the model's performance on open-vocabulary detection, we expanded the training dataset to include over 10,000 object categories. Additionally, to improve the model's effectiveness in extreme object detection scenarios, we synthesized non-existent object categories within the queries and constructed image data containing multiple instances for each object.
+
+% bboxing box data
+%point data
+To ensure superior point-based object grounding capabilities, we have constructed a comprehensive pointing dataset comprising both publicly available and synthetic data. Specifically, the data source includes public pointing and counting data from PixMo~\citep{deitke2024molmo}, publicly accessible object grounding data (from both object detection and instance segmentation tasks), and data synthesized by an automated pipeline for generating precise pointing data towards certain image details.
+
+\paragraph{Document Omni-Parsing Data}
+To train Qwen2.5-VL, we synthesized a large corpus of document data. Traditional methods for parsing document content typically rely on separate models to handle layout analysis, text extraction, chart interpretation, and illustration processing. In contrast, Qwen2.5-VL is designed to empower a general-purpose model with comprehensive capabilities for parsing, understanding, and converting document formats. Specifically, we incorporated a diverse array of elements into the documents, such as tables, charts, equations, natural or synthetic images, music sheets, and chemical formulas. These elements were uniformly formatted in HTML, which integrates layout box information and descriptions of illustrations into HTML tag structures. We also enriched the document layouts according to typical reading sequences and included the coordinates corresponding to each module, such as paragraphs and charts, in the HTML-based ground truth. This innovative approach allows the complete information of any document, including its layout, text, charts, and illustrations, to be represented in a standardized and unified manner. As a result, Qwen2.5-VL achieves seamless integration of multimodal document elements, thereby facilitating more efficient and accurate document understanding and transformation.
+
+Below is the QwenVL HTML format:
+
+\begin{tcolorbox}[colback=black!5!white,colframe=black!75!black,title=QwenVL HTML Format]
+<html><body> \\
+\textcolor{blue}{\# paragraph} \\
+<p data-bbox="\textcolor{red}{x1 y1 x2 y2}"> \textcolor{red}{content} </p> \\
+\textcolor{blue}{\# table} \\
+<style>\textcolor{red}{table\{id\} style}</style><table data-bbox="\textcolor{red}{x1 y1 x2 y2}" class="table\textcolor{red}{\{id\}}"> \textcolor{red}{table content} </table> \\
+\textcolor{blue}{\# chart} \\
+<div class="chart" data-bbox="\textcolor{red}{x1 y1 x2 y2}"> <img data-bbox="\textcolor{red}{x1 y1 x2 y2}" /><table> \textcolor{red}{chart content} </table></div> \\
+\textcolor{blue}{\# formula} \\
+<div class="formula" data-bbox="\textcolor{red}{x1 y1 x2 y2}"> <img data-bbox="\textcolor{red}{x1 y1 x2 y2}" /> <div> \textcolor{red}{formula content} </div></div>\\
+\textcolor{blue}{\# image caption} \\
+<div class="image caption" data-bbox="\textcolor{red}{x1 y1 x2 y2}"> <img data-bbox="\textcolor{red}{x1 y1 x2 y2}" /><p> \textcolor{red}{image caption} </p></div>\\
+\textcolor{blue}{\# image ocr} \\
+<div class="image ocr" data-bbox="\textcolor{red}{x1 y1 x2 y2}"> <img data-bbox="\textcolor{red}{x1 y1 x2 y2}" /><p> \textcolor{red}{image ocr} </p></div>\\
+\textcolor{blue}{\# music sheet} \\
+<div class="music sheet" format="abc notation" data-bbox="\textcolor{red}{x1 y1 x2 y2}"> <img data-bbox="\textcolor{red}{x1 y1 x2 y2}" /> <div> \textcolor{red}{music sheet content} </div></div> \\
+\textcolor{blue}{\# chemical formula content} \\
+<div class="chemical formula" format="smile" data-bbox="\textcolor{red}{x1 y1 x2 y2}"> <img data-bbox="\textcolor{red}{x1 y1 x2 y2}" /> <div> \textcolor{red}{chemical formula content} </div></div> \\
+</html></body>
+\end{tcolorbox}
+
+This format ensures that all document elements are represented in a structured and accessible manner, enabling efficient processing and understanding by Qwen2.5-VL.
+
+
+\paragraph{OCR Data} Data from different sources are gathered and curated to enhance the OCR performance, including synthetic data, open-sourced data and in-house collected data. Synthetic data is generated through a visual text generation engine to produce high-quality text images in the wild. To support a wider range of languages and enhance multilingual capabilities, we have incorporated a large-scale multilingual OCR dataset. This dataset includes support for diverse languages such as French, German, Italian, Spanish, Portuguese, Arabic, Russian, Japanese, Korean, and Vietnamese. The dataset is carefully curated to ensure diversity and quality, utilizing both high-quality synthetic images and real-world natural scene images. This combination ensures robust performance across various linguistic contexts and improves the model’s adaptability to different text appearances and environmental conditions. For chart-type data, we synthesized 1 million samples using visualization libraries including matplotlib, seaborn, and plotly, encompassing chart categories such as bar charts, relational diagrams, and heatmaps. Regarding tabular data, we processed 6 million real-world samples through an offline end-to-end table recognition model, subsequently filtering out low-confidence tables, overlapping tables, and tables with insufficient cell density.
+
+\paragraph{Video Data}
+To ensure enhanced robustness in understanding video data with varying frames per second (FPS), we dynamically sampled FPS during training to achieve a more evenly distributed representation of FPS within the training dataset. Additionally, for videos exceeding half an hour in length, we specifically constructed a set of long video captions by synthesizing multi-frame captions through a targeted synthesis pipeline. Regarding video grounding data, we formulated timestamps in both second-based formats and hour-minute-second-frame (hmsf) formats, ensuring that the model can accurately understand and output time in various formats.
+
+\paragraph{Agent Data}
+
+We enhance the perception and decision-making abilities to build the agent capabilities of Qwen2.5-VL. For perception, we collect screenshots on mobile, web, and desktop platforms. A synthetic data engine is used to generate screenshot captions and UI element grounding annotations. The caption task helps Qwen2.5-VL understand the graphic interface, while the grounding task helps it align the appearance and function of elements. For decision-making, we first unify the operations across mobile, web, and desktop platforms into a function call format with a shared action space. A set of annotated multi-step trajectories collected from open-source data and synthesized by agent framework~\citep{wang2025mobile, wang2024mobile2, wang2024mobile} on virtual environments are reformatted into a function format. We further generate a reasoning process for each step through human and model annotators~\citep{xu2024aguvis}. Specifically, given a ground-truth operation, we highlight it on the screenshot. Then, we provide the global query, along with screenshots from before and after this operation, to the annotators and require them to write reasoning content to explain the intention behind this operation. A model-based filter is used to screen out low-quality reasoning content. Such reasoning content prevents Qwen2.5-VL from overfitting to the ground-truth operations and makes it more robust in real-world scenarios.
+
+\begin{table}[h!]
+\small
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Stages}        & \textbf{Visual Pre-Training}       & \textbf{Multimodal Pre-Training}       & \textbf{Long-Context Pre-Training}       \\ \midrule
+Data   &   \makecell{Image Caption \\ Knowledge \\ OCR}     & \makecell{+ \\ Pure text \\ Interleaved Data \\ VQA, Video \\ Grounding, Agent}   &     \makecell{+ \\ 
+ Long Video\\ Long Agent \\ Long Document}    \\ 
+\midrule
+Tokens&  1.5T  &    2T   &    0.6T   \\ 
+\midrule
+Sequence length   &  8192  &    8192   &    32768   \\ 
+\midrule
+Training   &  ViT  &    ViT \& LLM   &    ViT \& LLM   \\ 
+\bottomrule
+\end{tabular}
+\caption{Training data volume and composition across different stages.}
+\label{tab:pretrainingdata}
+\end{table}
+
+
+% 668m vit size
+\subsubsection{Training Recipe}
+We trained a Vision Transformer (ViT) from scratch using DataComp~\citep{datacomp} and some in-house datasets as the initialization for the vision encoder, while leveraging the pre-trained Qwen2.5 large language model (LLM)~\citep{qwen2.5} as the initialization for the LLM component. As shown in Table \ref{tab:pretrainingdata}, the pre-training process is divided into three distinct phases, each employing different data configurations and training strategies to progressively enhance the model's capabilities.
+
+In the first phase, only the Vision Transformer (ViT) is trained to improve its alignment with the language model, laying a solid foundation for multimodal understanding. The primary data sources during this phase include image captions, visual knowledge, and OCR data. These datasets are carefully selected to foster ViT's ability to extract meaningful visual representations that can be effectively integrated with textual information.
+
+In the second phase, all model parameters are unfrozen, and the model is trained on a diverse set of multimodal image data to enhance its capacity to process complex visual information. This phase introduces more intricate and reasoning-intensive datasets, such as interleaved data, multi-task learning datasets, visual question answering (VQA), multimodal mathematics, agent-based tasks, video understanding, and pure-text datasets. These datasets strengthen the model's ability to establish deeper connections between visual and linguistic modalities, enabling it to handle increasingly sophisticated tasks.
+
+In the third phase, to further enhance the model's reasoning capabilities over longer sequences, video, and agent-based data are incorporated, alongside an increase in sequence length. This allows the model to tackle more advanced and intricate multimodal tasks with greater precision. By extending the sequence length, the model gains the ability to process extended contexts, which is particularly beneficial for tasks requiring long-range dependencies and complex reasoning.
+
+To address the challenges posed by varying image sizes and text lengths, which can lead to imbalanced computational loads during training, we adopted a strategy to optimize training efficiency. The primary computational costs arise from the LLM and the vision encoder. Given that the vision encoder has relatively fewer parameters and that we introduced window attention to further reduce its computational demands, we focused on balancing the computational load of the LLM across different GPUs. Specifically, we dynamically packed data samples based on their corresponding input sequence lengths to the LLM, ensuring consistent computational loads. In the first and second phases, data were uniformly packed to a sequence length of 8,192, while in the third phase, the sequence length was increased to 32,768 to accommodate the model's enhanced capacity for handling longer sequences.
+
+\subsection{Post-training}
+
+The post-training alignment framework of Qwen2.5-VL employs a dual-stage optimization paradigm comprising Supervised Fine-Tuning (SFT) and Direct Preference Optimization (DPO)~\citep{DBLP:conf/nips/RafailovSMMEF23}. This hierarchical alignment strategy synergizes parameter-efficient domain adaptation with human preference distillation, addressing both representational grounding and behavioral refinement through distinct optimization objectives.
+
+Supervised Fine-Tuning (SFT) aims to bridge the gap between pretrained representations and downstream task requirements through targeted instruction optimization. During this phase, we employ the ChatML format~\citep{chatml} to structure instruction-following data, deliberately diverging from the pretraining data schema while maintaining architectural consistency with Qwen2-VL~\citep{Qwen2-VL}. This format transition enables three critical adaptations: 1) Explicit dialogue role tagging for multimodal turn-taking, 2) Structured injection of visual embeddings alongside textual instructions, and 3) Preservation of cross-modal positional relationships through format-aware packing. By exposing the model to curated multimodal instruction-response pairs under this enhanced schema, SFT enables efficient knowledge transfer while maintaining the integrity of pre-trained features. 
+
+\subsubsection{Instruction Data}
+
+The Supervised Fine-Tuning (SFT) phase employs a meticulously curated dataset designed to enhance the model's instruction-following capabilities across diverse modalities. This dataset comprises approximately 2 million entries, evenly distributed between pure text data (50\%) and multimodal data (50\%), which includes image-text and video-text combinations. The inclusion of multimodal data enables the model to process complex inputs effectively. Notably, although pure text and multimodal entries are equally represented, multimodal entries consume significantly more tokens and computational resources during training due to the embedded visual and temporal information. The dataset is primarily composed of Chinese and English data, with supplementary multilingual entries to support broader linguistic diversity.
+
+The dataset is structured to reflect varying levels of dialogue complexity, including both single-turn and multi-turn interactions. These interactions are further contextualized by scenarios ranging from single-image inputs to multi-image sequences, thereby simulating realistic conversational dynamics. The query sources are primarily drawn from open-source repositories, with additional contributions from curated purchased datasets and online query data. This combination ensures broad coverage and enhances the representativeness of the dataset.
+
+To address a wide range of application scenarios, the dataset includes specialized subsets for General Visual Question Answering (VQA), image captioning, mathematical problem-solving, coding tasks, and security-related queries. Additionally, dedicated datasets for Document and Optical Character Recognition (Doc and OCR), Grounding, Video Analysis, and Agent Interactions are constructed to enhance domain-specific proficiency. Detailed information regarding the data can be found in the relevant sections of the paper. This structured and diverse composition ensures that the SFT phase effectively aligns pre-trained representations with the nuanced demands of downstream multimodal tasks, fostering robust and contextually aware model performance.
+
+
+\subsubsection{Data Filtering Pipeline}
+
+The quality of training data is a critical factor influencing the performance of vision-language models. Open-source and synthetic datasets typically exhibit significant variability, often containing noisy, redundant, or low-quality samples. Therefore, rigorous data cleaning and filtering processes are essential to address these issues. Low-quality data can lead to suboptimal alignment between pretrained representations and downstream task requirements, thereby diminishing the model's ability to effectively handle complex multimodal tasks. Consequently, ensuring high-quality data is paramount for achieving robust and reliable model performance.
+
+To address these challenges, we implement a two-stage data filtering pipeline designed to systematically enhance the quality of the Supervised Fine-Tuning (SFT) dataset. This pipeline comprises the following stages:
+
+\paragraph{Stage 1: Domain-Specific Categorization}
+
+In the initial stage, we employ \textit{Qwen2-VL-Instag}, a specialized classification model derived from Qwen2-VL-72B, to perform hierarchical categorization of question-answer (QA) pairs. This model organizes QA pairs into eight primary domains, such as \textit{Coding} and \textit{Planning}, which are further divided into 30 fine-grained subcategories. For example, the primary domain \textit{Coding} is subdivided into subcategories including \textit{Code\_Debugging}, \textit{Code\_Generation}, \textit{Code\_Translation}, and \textit{Code\_Understanding}. This hierarchical structure facilitates domain-aware and subdomain-aware filtering strategies, enabling the pipeline to optimize data-cleaning processes tailored to each category's specific characteristics. Consequently, this enhances the quality and relevance of the supervised fine-tuning (SFT) dataset.
+
+\paragraph{Stage 2: Domain-Tailored Filtering}
+
+The second stage involves domain-tailored filtering, which integrates both rule-based and model-based approaches to comprehensively enhance data quality. Given the diverse nature of domains such as Document Processing, Optical Character Recognition (OCR), and Visual Grounding, each may necessitate unique filtering strategies. Below, we provide an overview of the general filtering strategies applied across these domains.
+
+\textbf{Rule-Based Filtering} employs predefined heuristics to eliminate low-quality or problematic entries. Specifically, for datasets related to Document Processing, OCR, and Visual Grounding tasks, repetitive patterns are identified and removed to prevent distortion of the model's learning process and ensure optimal performance. Additionally, entries containing incomplete, truncated, or improperly formatted responses—common in synthetic datasets and multimodal contexts—are excluded. To maintain relevance and uphold ethical standards, queries and answers that are unrelated or could potentially lead to harmful outputs are also discarded. This structured approach ensures that the dataset adheres to ethical guidelines and meets task-specific requirements.
+
+\textbf{Model-Based Filtering} further refines the dataset by leveraging reward models trained on the Qwen2.5-VL series. These models evaluate multimodal QA pairs across multiple dimensions. Queries are assessed for complexity and relevance, retaining only those examples that are appropriately challenging and contextually pertinent. Answers are evaluated based on correctness, completeness, clarity, relevance to the query, and helpfulness. In visual-grounded tasks, particular attention is given to verifying the accurate interpretation and utilization of visual information. This multi-dimensional scoring ensures that only high-quality data progresses to the SFT phase.
+
+
+\subsubsection{Rejection Sampling for Enhanced Reasoning}
+
+To complement our structured data filtering pipeline, we employ rejection sampling as a strategy to refine the dataset and enhance the reasoning capabilities of the vision-language model (VLM). This approach is particularly critical for tasks requiring complex inference, such as mathematical problem-solving, code generation, and domain-specific visual question answering (VQA). Prior research has shown that incorporating Chain-of-Thought (CoT) \cite{DBLP:journals/corr/abs-2201-11903} reasoning significantly improves a model's inferential performance.~\citep{DBLP:journals/corr/abs-2412-19437} Our post-training experiments confirm this, underscoring the importance of structured reasoning processes for achieving high-quality outcomes.
+
+The rejection sampling process begins with datasets enriched with ground truth annotations. These datasets are carefully curated to include tasks that demand multi-step reasoning, such as mathematical problem-solving, code generation, and domain-specific VQA. Using an intermediate version of the Qwen2.5-VL model, we evaluate the generated responses against the ground truth. Only samples where the model's output matches the expected answers are retained, ensuring the dataset consists solely of high-quality, accurate examples.
+
+To further improve data quality, we apply additional constraints to filter out undesirable outputs. Specifically, we exclude responses that exhibit code-switching, excessive length, or repetitive patterns. These criteria ensure clarity and coherence in the CoT reasoning process, which is crucial for downstream applications.
+
+A key challenge in applying CoT reasoning to vision-language models is their reliance on both textual and visual modalities. Intermediate reasoning steps may fail to adequately integrate visual information, either by ignoring relevant visual cues or misinterpreting them. To address this, we have developed rule-based and model-driven filtering strategies to validate the accuracy of intermediate reasoning steps. These mechanisms ensure that each step in the CoT process effectively integrates visual and textual modalities. Despite these efforts, achieving optimal modality alignment remains an ongoing challenge that requires further advancements.
+
+The data generated through rejection sampling significantly enhances the model's reasoning proficiency. By iteratively refining the dataset and removing low-quality or erroneous samples, we enable the model to learn from high-fidelity examples that emphasize accurate and coherent reasoning. This methodology not only strengthens the model's ability to handle complex tasks but also lays the groundwork for future improvements in vision-language modeling.
+
+\subsubsection{Training Recipe}
+The post-training process for Qwen2.5-VL consists of two phases: Supervised Fine-Tuning (SFT) and Direct Preference Optimization (DPO), both with the Vision Transformer (ViT) parameters frozen. In the SFT phase, the model is fine-tuned on diverse multimodal data, including image-text pairs, video, and pure text, sourced from general VQA, Rejection Sampling, and specialized datasets such as Document and OCR, Grounding, Video, and Agent-related tasks. The DPO phase focuses exclusively on image-text and pure text data, utilizing preference data to align the model with human preferences, with each sample processed only once to ensure efficient optimization. This streamlined process enhances the model’s cross-modal reasoning and task-specific performance while maintaining alignment with user intent.
+
+
+\section{Experiments}
+In this section, we first introduce the overall model and compare it with the current state-of-the-art (SoTA) models. Then, we evaluate the model's performance across various sub-capabilities.
+
+\subsection{Comparison with the SOTA Models}
+\input{content/experiments_sota}
+\subsection{Performance on Pure Text Tasks}
+To critically evaluate the performance of instruction-tuned models on pure text tasks, as illustrated in Table~\ref{puretext}, we selected several representative benchmarks to assess the model's capabilities across a variety of domains, including general tasks~\citep{mmlupro,mmluredux,livebench}, mathematics and science tasks~\citep{gpqa,math,gsm8k}, coding tasks~\citep{humaneval,multiple}, and alignment task~\citep{ifeval}. We compared Qwen2.5-VL with several large language models (LLMs) of similar size. The results demonstrate that Qwen2.5-VL not only achieves state-of-the-art (SoTA) performance on multimodal tasks but also exhibits leading performance on pure text tasks, showcasing its versatility and robustness across diverse evaluation criteria.
+
+\begin{table}[tbp]
+
+\centering
+
+\caption{\textbf{Performance on pure text tasks of the 70B+ Instruct models and Qwen2.5-VL.}}
+
+\label{tab:70b_instruct}
+\small
+\setlength{\tabcolsep}{2.6pt}
+
+\begin{tabular}{@{}lccccc@{}}
+
+\toprule
+
+\textbf{Datasets}  & \textbf{Llama-3.1-70B} & \textbf{Llama-3.1-405B} & \textbf{Qwen2-72B} & \textbf{Qwen2.5-72B} & \textbf{Qwen2.5-VL-72B} \\
+
+\midrule
+
+\multicolumn{6}{c}{\textit{General Tasks}} \\
+\midrule
+
+MMLU-Pro & 66.4 & \textbf{73.3} & 64.4 & 71.1 & 71.2 \\
+
+MMLU-redux  & 83.0 & 86.2 & 81.6 & \textbf{86.8} & 85.9 \\
+
+LiveBench-0831 & 46.6 & 53.2 & 41.5 & 52.3 & \textbf{57.0} \\
+
+\midrule
+\multicolumn{6}{c}{\textit{Mathematics \& Science Tasks}} \\
+\midrule
+
+GPQA  & 46.7 & \textbf{51.1} & 42.4 & 49.0 & 49.0\\
+
+MATH  & 68.0 & 73.8 & 69.0 & \textbf{83.1} & 83.0\\
+
+GSM8K  & 95.1 & \textbf{96.8} & 93.2 & 95.8 & 95.3\\
+
+\midrule
+\multicolumn{6}{c}{\textit{Coding Tasks}} \\
+\midrule
+
+HumanEval  & 80.5 & \textbf{89.0} & 86.0 & 86.6 & 87.8\\
+
+MultiPL-E  & 68.2 & 73.5 & 69.2 & 75.1 & \textbf{79.5} \\
+
+\midrule
+\multicolumn{6}{c}{\textit{Alignment Tasks}} \\
+\midrule
+
+IFEval  & 83.6 & 86.0 & 77.6 & 84.1 & \textbf{86.3}\\
+
+
+\bottomrule
+
+\end{tabular}
+\label{puretext}
+\end{table}
+
+
+\subsection{Quantitative Results}
+
+\subsubsection{General Visual Question Answering}
+To comprehensively evaluate the model's capabilities in general visual question answering (VQA) and dialogue, we conducted extensive experiments across a diverse range of datasets. As illustrated in Table~\ref{tab:sota_results}, Qwen2.5-VL demonstrates state-of-the-art performance in various VQA tasks, subjective evaluations, multilingual scenarios, and multi-image questions. Specifically, it excels on benchmark datasets such as MMBench series~\citep{MMBench}, MMStar~\citep{chen2024we}, MME~\citep{fu2023mme}, MuirBench~\citep{wang2024muirbench}, BLINK\citep{fu2024blink}, CRPE~\citep{wang2024allseeing_v2}, HallBench~\citep{guan2023hallusionbench}, MTVQA~\citep{tang2024mtvqa}, MME-RealWorld~\citep{mme-realworld}, MMVet~\citep{yu2024mm}, and MM-MT-Bench~\citep{agrawal2024pixtral}.
+
+In the domain of visual detail comprehension and reasoning, Qwen2.5-VL-72B achieves an accuracy of 88.4\% on the MMBench-EN-V1.1 dataset, surpassing previous state-of-the-art models such as InternVL2.5 (78B) and Claude-3.5 Sonnet-0620. Similarly, on the MMStar dataset, Qwen2.5-VL attains a score of 70.8\%, outperforming other leading models in this benchmark. These results underscore the model's robustness and adaptability across diverse linguistic contexts.
+
+Furthermore, in high-resolution real-world scenarios, specifically on the MME-RealWorld benchmark, Qwen2.5-VL demonstrates state-of-the-art performance with a score of 63.2, showcasing its broad adaptability to realistic environments. Additionally, in multi-image understanding tasks evaluated on the MuirBench dataset, Qwen2.5-VL achieves a leading score of 70.7, further highlighting its superior generalization capabilities. Collectively, these results illustrate the strong versatility and effectiveness of Qwen2.5-VL in addressing general-purpose visual question answering (VQA) tasks across various scenarios.
+
+Notably, even the smaller-scale versions of Qwen2.5-VL, specifically Qwen2.5-VL-7B and Qwen2.5-VL-3B, exhibit highly competitive performance. For instance, on the MMStar dataset, Qwen2.5-VL-7B achieves 63.9\%, while Qwen2.5-VL-3B scores 55.9\%. This demonstrates that Qwen2.5-VL's architecture is not only powerful but also scalable, maintaining strong performance even with fewer parameters.
+
+\subsubsection{Document Understanding and OCR}
+
+\input{content/experiments_ocr.tex}
+
+\subsubsection{Spatial Understanding}
+
+\input{content/experiments_grounding.tex}
+
+\subsubsection{Video Understanding and Grounding}
+
+\input{content/experiments_video.tex}
+
+\subsubsection{Agent}
+
+\input{content/experiments_agent.tex}
+\section{Conclusion}
+We present Qwen2.5-VL, a state-of-the-art vision-language model series that achieves significant advancements in multimodal understanding and interaction. With enhanced capabilities in visual recognition, object localization, document parsing, and long-video comprehension, Qwen2.5-VL excels in both static and dynamic tasks. Its native dynamic-resolution processing and absolute time encoding enable robust handling of diverse inputs, while Window Attention reduces computational overhead without sacrificing resolution fidelity. Qwen2.5-VL caters to a wide range of applications, from edge AI to high-performance computing. The flagship Qwen2.5-VL-72B matches or surpasses leading models like GPT-4o, and Claude 3.5 Sonnet, particularly in document and diagram understanding, while maintaining strong performance on pure text tasks. The smaller Qwen2.5-VL-7B and Qwen2.5-VL-3B variants outperform similarly sized competitors, offering efficiency and versatility. Qwen2.5-VL sets a new benchmark for vision-language models, demonstrating exceptional generalization and task execution across domains. Its innovations pave the way for more intelligent and interactive systems, bridging perception and real-world application. 
+
+\section{Authors}
+\textbf{Core Contributors:} Shuai Bai, Keqin Chen, Xuejing Liu,  Jialin Wang, Wenbin Ge, Sibo Song, Kai Dang, Peng Wang, Shijie Wang, Jun Tang, Humen Zhong, Yuanzhi Zhu, Mingkun Yang, Zhaohai Li, Jianqiang Wan, Pengfei Wang, Wei Ding, Zheren Fu, Yiheng Xu, Jiabo Ye, Xi Zhang, Tianbao Xie, Zesen Cheng, Hang Zhang, Zhibo Yang, Haiyang Xu, Junyang Lin
+
+\textbf{Contributors\footnote{Alphabetical order.}:} An Yang, Binyuan Hui, Bowen Yu, Chen Cheng, Dayiheng Liu, Fan Hong, Fei Huang, Jiawei Liu, Jin Xu, Jianhong Tu, Jianyuan Zeng, Jie Zhang, Jinkai Wang, Jianwei Zhang, Jingren Zhou, Kexin Yang, Mei Li, Ming Yan, Na Ni, Rui Men, Songtao Jiang, Xiaodong Deng, Xiaoming Huang, Ximing Zhou, Xingzhang Ren, Yang Fan, Yichang Zhang, Yikai Zhu, Yuqiong Liu, Zhifang Guo
+
+\bibliography{colm2024_conference}
+\bibliographystyle{colm2024_conference}
+
+% \appendix
+% \section{Appendix}
+% You may include other additional sections here.
+
+\end{document}

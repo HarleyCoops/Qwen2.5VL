@@ -1,0 +1,27 @@
+Agent capabilities within multimodal models are crucial for enabling these models to effectively interact with real-world devices. We assess the agent capabilities of Qwen2.5-VL through various aspects. The UI elements grounding is evaluated by ScreenSpot~\citep{cheng2024seeclick} and ScreenSpot Pro~\citep{screenspotpro}. Offline evaluations are conducted on Android Control~\citep{li2024effects}, while online evaluations are performed on platforms including AndroidWorld~\citep{rawles2024androidworld}, MobileMiniWob++~\citep{rawles2024androidworld}, and OSWorld~\citep{xie2025osworld}. We compare the performance of Qwen2.5-VL-72B againsts other prominent models, such as GPT-4o~\citep{gpt4o}, Gemini 2.0~\citep{gemini2}, Claude~\citep{sonnet3_5_computer_use}, Aguvis-72B~\citep{xu2024aguvis}, and Qwen2-VL-72B~\citep{Qwen2-VL}. The results are demonstrated in \Cref{tab:agent_bench}.
+
+\begin{table}[h]
+\centering
+\caption{\textbf{Performance of Qwen2.5-VL and other models on GUI Agent benchmarks.}}
+\label{tab:agent_bench}
+% \small
+\resizebox{\textwidth}{!}{%
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Benchmarks} & \textbf{GPT-4o} & \textbf{Gemini 2.0} & \textbf{Claude} & \textbf{Aguvis-72B} & \textbf{Qwen2-VL-72B} & \textbf{Qwen2.5-VL-72B} \\ 
+\midrule
+ScreenSpot & 18.1 & 84.0 & 83.0 & \textbf{89.2} & - & 87.1 \\ 
+ScreenSpot Pro & - & - & 17.1 & 23.6 & 1.6 & \textbf{43.6} \\  
+% AITZ\_EM & 35.3 & 33.79 & / & / & 72.8 & 83.2 \\  
+Android Control High$_\text{EM}$ & 20.8 & 28.5 & 12.5 & 66.4 & 59.1 & \textbf{67.36} \\  
+Android Control Low$_\text{EM}$ & 19.4 & 60.2 & 19.4 & 84.4 & 59.2 & \textbf{93.7} \\  
+AndroidWorld$_\text{SR}$ & 34.5\% (SoM) & 26\% (SoM) & 27.9\% & 26.1\% & 6\% (SoM) & \textbf{35\%} \\  
+MobileMiniWob++$_\text{SR}$ & 61\% & 42\% (SoM) & 61\% (SoM) & 66\% & 50\% (SoM) & \textbf{68\%} \\  
+OSWorld & 5.03 & 4.70 & \textbf{14.90} & 10.26 & 2.42 & 8.83 \\  
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+The performance of Qwen2.5-VL-72B demonstrates exceptional advancements across GUI grounding benchmarks. It achieves 87.1\% accuracy on ScreenSpot, competing strongly with Gemini 2.0 (84.0\%) and Claude (83.0\%), while notably setting a new standard on ScreenSpot Pro with 43.6\% accuracy - far surpassing both Aguvis-72B (23.6\%) and its foundation Qwen2-VL-72B (1.6\%). Leveraging these superior grounding capabilities, Qwen2.5-VL-72B significantly outperforms baselines across all offline evaluation benchmarks with a large gap. In online evaluation, some baselines have difficulty completing tasks due to limited grounding capabilities. Thus, we apply the Set-of-Mark (SoM) to the inputs of these models. The results show that Qwen2.5-VL-72B can outperform the baselines on AndroidWorld and MobileMiniWob++ and achieve comparable performance on OSWorld in online evaluation without auxiliary marks. This observation suggests that Qwen2.5-VL-72B is able to function as an agent in real and dynamic environments.

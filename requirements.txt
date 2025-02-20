@@ -1,0 +1,15 @@
+# Core dependencies
+requests>=2.31.0
+PyYAML>=6.0.1
+pathlib>=1.0.1
+typing>=3.7.4.3
+
+# Development dependencies
+pytest>=7.4.0
+black>=23.7.0
+flake8>=6.1.0
+mypy>=1.5.1
+
+# Documentation
+mkdocs>=1.5.2
+mkdocs-material>=9.2.0

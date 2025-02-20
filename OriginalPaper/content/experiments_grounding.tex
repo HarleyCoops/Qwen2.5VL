@@ -1,0 +1,56 @@
+% In large multi-modal models, visual grounding allows models to precisely localize and identify specific objects, regions, or elements within an image based on natural language queries or descriptions. This capability goes beyond traditional object detection by establishing a semantic relationship between visual content and linguistic context, enabling more nuanced and contextually aware visual reasoning. 
+Understanding spatial relationships is crucial for developing AI models that can interpret and interact with the world as humans do. In Large Vision-Language Models, visual grounding allows for the precise localization and identification of specific objects, regions, or elements within an image based on natural language queries or descriptions. This capability transcends traditional object detection by establishing a semantic relationship between visual content and linguistic context, facilitating more nuanced and contextually aware visual reasoning. 
+We evaluated Qwen2.5-VL's grounding capabilities on the referring expression comprehension benchmarks~\citep{refcoco, refcocog}, object detection in the wild ~\citep{li2022grounded}, self-curated point grounding benchmark, and CountBench~\citep{paiss2023teaching}.
+
+We compare Qwen2.5-VL's visual grounding capabilities with other leading LVLMs including Gemini, Grounding-DINO~\citep{grounding_dino}, Molmo~\citep{deitke2024molmo}, and InternVL2.5.
+
+Qwen2.5-VL achieves leading performance across different benchmarks from box-grounding, and point-grounding to counting.
+By equipping Qwen2.5-VL with both box and point-grounding capability, it is able to understand, locate, and reason on the very details of certain parts of an image. For open-vocabulary object detection, Qwen2.5-VL achieves a good performance of 43.1 mAP on ODinW-13, surpassing most LVLMs and quickly narrowing the gap between generalist models and specialist models. In addition, Qwen2.5-VL unlocks the point-based grounding ability so that it could precisely locate the very details of a certain object, which was difficult to represent by a bounding box in the past. Qwen2.5-VL's counting ability also makes great progress, achieving a leading accuracy of 93.6 on CountBench with Qwen2.5-VL-72B using a ``detect then count''-style prompt.
+
+\begin{table}[h]
+\centering
+\caption{\textbf{Performance of Qwen2.5-VL and other models on grounding.}}
+\label{tab:grounding_results}
+% \small
+\scalebox{0.93}{
+\setlength{\tabcolsep}{3.0pt}
+
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+\textbf{Datasets}       & \makecell{\textbf{Gemini 1.5} \\ \textbf{Pro}} & \makecell{\textbf{Grounding} \\ \textbf{DINO}} & \makecell{\textbf{Molmo} \\ \textbf{72B}} & \makecell{\textbf{InternVL2.5} \\ \textbf{78B}} & \makecell{\textbf{Qwen2.5-VL} \\ \textbf{72B}} & \makecell{\textbf{Qwen2.5-VL} \\ \textbf{7B}} & \makecell{\textbf{Qwen2.5-VL} \\ \textbf{3B}} \\ 
+\midrule
+Refcoco$_{val}$ & 73.2   & 90.6 & - & 93.7 & 92.7 & 90.0 & 89.1 \\ 
+Refcoco$_{testA}$ & 72.9    & 93.2 & - & 95.6 & 94.6 & 92.5 & 91.7 \\  
+Refcoco$_{testB}$ & 74.6   & 88.2 & - & 92.5 & 89.7 & 85.4 & 84.0 \\  
+\midrule
+Refcoco+$_{val}$ & 62.5   & 88.2 & -  & 90.4 & 88.9 & 84.2 & 82.4 \\  
+Refcoco+$_{testA}$ & 63.9   & 89.0 & - & 94.7 & 92.2 & 89.1 & 88.0 \\  
+Refcoco+$_{testB}$ & 65.0    & 75.9 & - & 86.9 & 83.7 & 76.9 & 74.1 \\ 
+\midrule
+Refcocog$_{val}$ & 75.2   & 86.1 & - & 92.7 & 89.9 & 87.2 & 85.2 \\  
+Refcocog$_{test}$ & 76.2    & 87.0 & - & 92.2 & 90.3 & 87.2 & 85.7 \\   
+\midrule
+
+ODinW  & 36.7 & 55.0 & - & 31.7 & 43.1 & 37.3 & 37.5 \\
+\midrule
+PointGrounding  & - & - & 69.2 & - & 67.5 & 67.3 & 58.3 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{\textbf{Performance of Qwen2.5-VL and other models on counting.}}
+\label{tab:grounding_results}
+\scalebox{0.92}{
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Datasets}       & \textbf{Gemini 1.5-Pro} & \textbf{GPT-4o} & \textbf{Claude-3.5 Sonnet}& \textbf{Molmo-72b}& \textbf{InternVL2.5-78B}&\textbf{Qwen2.5-VL-72B}  \\ 
+\midrule
+CountBench & 85.5   & 87.9 & 89.7 & 91.2 & 72.1 & 93.6  \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

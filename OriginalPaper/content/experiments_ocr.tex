@@ -1,0 +1,50 @@
+We evaluated our models across a diverse range of OCR, chart, and document understanding benchmarks. Table~\ref{tab:ocr_results} demonstrates the performance comparison between Qwen2.5-VL models and top-tier models on following OCR-related benchmarks: AI2D~\citep{kembhavi2016diagram}, TextVQA~\citep{textvqa}, DocVQA~\citep{docvqa}, InfoVQA~\citep{Mathew2021InfographicVQA}, ChartQA~\citep{masry2022chartqa}, CharXiv~\citep{wang2024charxiv}, SEED-Bench-2-Plus~\citep{li2024seed2plus}, OCRBench~\citep{liu2024ocrbenchhiddenmysteryocr},  OCRBench\_v2~\citep{fu2024ocrbenchv2improvedbenchmark}, CC-OCR~\citep{yang2024ccocrcomprehensivechallengingocr}, OmniDocBench~\citep{ouyang2024omnidocbenchbenchmarkingdiversepdf}, VCR~\citep{zhang2024vcr}.
+
+
+For OCR-related parsing benchmarks on element parsing for multi-scene, multilingual, and various built-in (handwriting, tables, charts, chemical formulas, and mathematical expressions) documents, as CC-OCR and OmniDocBench, Qwen2.5-VL-72B model sets the new state-of-the-art due to curated training data and excellent capability of LLM models.
+
+For OCR-related understanding benchmarks for scene text, chart, diagram and document, Qwen2.5-VL models achieve impressive performance with good understanding abilities. Notably, on composite OCR-related understanding benchmarks as OCRBench, InfoVQA which focusing on infographics, and SEED-Bench-2-Plus covering text-rich scenarios including charts, maps, and webs, Qwen2.5-VL-72B
+achieves remarkable results, significantly outperforming strong competitors such as InternVL2.5-78B.
+
+Furthermore, for OCR-related comprehensive benchmarks as OCRBench\_v2 including a wide range of OCR-related parsing and understanding tasks, top performance is also achieved by Qwen2.5-VL models, largely exceeding best model Gemini 1.5-Pro by 9.6\% and 20.6\% for English and Chinese track respectively. %More detailed analysis can be seen in Appendix.
+
+\begin{table}[h]
+
+\centering
+\caption{\textbf{Performance of Qwen2.5-VL and other models on OCR, chart, and document understanding benchmarks.}}
+\label{tab:ocr_results}
+% \small
+\setlength{\tabcolsep}{3.0pt}
+\scalebox{0.83}{
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+\textbf{Datasets}      & \makecell{\textbf{Claude-3.5} \\ \textbf{Sonnet}} & \makecell{\textbf{Gemini 1.5} \\ \textbf{Pro}} & \makecell{\textbf{GPT} \\ \textbf{4o}} & \makecell{\textbf{InternVL2.5} \\\textbf{78B}}&  \makecell{\textbf{Qwen2.5-VL} \\ \textbf{72B}} & \makecell{\textbf{Qwen2.5-VL} \\ \textbf{7B}}  & \makecell{\textbf{Qwen2.5-VL} \\ \textbf{3B}}  \\ 
+
+\midrule
+\multicolumn{8}{c}{\textit{OCR-related Parsing Tasks}} \\
+\midrule
+
+CC-OCR     & 62.5 & 73.0   & 66.9 & 64.7 & \textbf{79.8} & 77.8 & 74.5  \\ 
+OmniDocBench$_{\text{edit en/zh}}$$\downarrow$ & 0.330/0.381 & 0.230/\textbf{0.281} & 0.265/0.435 & 0.275/0.324 & \textbf{0.226}/0.324 & 0.308/0.398 & 0.409/0.543  \\ 
+
+\midrule
+\multicolumn{8}{c}{\textit{OCR-related Understanding Tasks}} \\
+\midrule
+AI2D$_{\text{w. M.}}$ & 81.2 & 88.4 & 84.6 & \textbf{89.1} & 88.7 & 83.9 & 81.6  \\ 
+TextVQA$_{\text{val}}$ & 76.5  & 78.8 & 77.4 & 83.4 & 83.5 & \textbf{84.9} & 79.3  \\ 
+DocVQA$_{\text{test}}$ & 95.2   & 93.1 & 91.1 &95.1 &   \textbf{96.4} & 95.7 & 93.9     \\     
+InfoVQA$_{\text{test}}$ & 74.3 & 81.0 & 80.7 & 84.1 & \textbf{87.3} & 82.6 & 77.1  \\ 
+ChartQA$_{\text{test Avg.}}$ & \textbf{90.8} & 87.2 & 86.7 & 88.3 & 89.5 & 87.3 & 84.0  \\ 
+CharXiv$_{\text{RQ/DQ}}$ & \textbf{60.2}/84.3  & 43.3/72.0 & 47.1/84.5 & 42.4/82.3 & 49.7/\textbf{87.4} & 42.5/73.9 & 31.3/58.6  \\ 
+SEED-Bench-2-Plus  & 71.7 & 70.8 & 72.0 & 71.3 & \textbf{73.0} & 70.4 & 67.6  \\ 
+OCRBench  & 788 & 754 & 736 & 854 &  \textbf{885} & 864 & 797  \\
+% VCR$_{\text{En-Easy-EM}}$  & 63.9 & 62.7 & 91.6 & \textbf{95.7} &  91.9 & 94.8 & 83.5  \\
+VCR$_{\text{En-Hard-EM}}$  & 41.7 & 28.1 & 73.2 & - & 79.8 & \textbf{80.5} & 37.5  \\
+\midrule
+\multicolumn{8}{c}{\textit{OCR-related Comprehensive Tasks}} \\
+\midrule
+OCRBench\_v2$_{\text{en/zh}}$ & 45.2/39.6 & 51.9/43.1    & 46.5/32.2   & 49.8/52.1 & \textbf{61.5}/\textbf{63.7} & 56.3/57.2 & 54.3/52.1  \\ 
+\bottomrule
+\end{tabular}
+}
+\end{table}

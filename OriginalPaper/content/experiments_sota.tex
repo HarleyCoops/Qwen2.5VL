@@ -1,0 +1,84 @@
+% \begin{table}[h]
+% \tiny
+% \centering
+% \caption{\textbf{Performance of Qwen2.5-VL and State-of-the-art.}}
+% \label{tab:sota_results}
+% \setlength{\tabcolsep}{3.0pt}
+% \begin{tabular}{@{}lcccccccc@{}}
+% \toprule
+% \textbf{Datasets}  & \textbf{Previous SoTA} & \textbf{Claude-3.5 Sonnet} & \textbf{GPT-4o} & \textbf{InternVL2.5-78B} & \textbf{Qwen2-VL-72B} & \textbf{Qwen2.5-VL-72B} & \textbf{Qwen2.5-VL-7B} & \textbf{Qwen2.5-VL-3B} \\ 
+% \midrule
+% MMMU$_{\text{val}}$ & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 64.5 & 70.7 & 58.6 & 53.1  \\ 
+% MMMU-Pro$_{\text{overall}}$ & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 46.2 & 51.1 & 38.3 & 31.56  \\ 
+% MathVista$_{\text{mini}}$   & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 70.5 & 74.8 & 68.2 & 62.3  \\ 
+% MathVision$_{\text{full}}$   & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 25.9 & 38.1 & 25.1 & 21.2  \\    
+% MathVerse$_{\text{mini}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & - & 57.6 & 49.2 & 47.6  \\ 
+% MMBench-EN$_{\text{test}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 86.9 & 88.6 & 83.5 & 79.1  \\ 
+% MMBench-CN$_{\text{test}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 86.7 & 87.9 & 83.4 & 78.1  \\ 
+% MMBench-V1.1-EN$_{\text{test}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 86.1 & 88.4 & 82.6 & 77.4  \\ 
+% MMBench-V1.1-CN$_{\text{test}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 85.8 & 87.1 & 82.6 & 76.7  \\ 
+% MMVet$_{\text{turbo}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 74.0 & 76.2 & 67.1 & 61.8  \\ 
+% MMStar     & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 68.3 & 70.8 & 63.9 & 55.9  \\ 
+% MME$_{\text{sum}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 2483 & 2448 & 2347 & 2157  \\ 
+% MMT-Bench$_{\text{val}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 71.7 & 70.0 & 63.6 & 62.0  \\ 
+% MuirBench  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & - & 70.7 & 59.6 & 47.7  \\ 
+% BLINK$_{\text{val}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & - & 64.4 & 56.4 & 47.6  \\ 
+% POPE$_{\text{avg}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & - & 88.4 & 87.7 & 87.6  \\ 
+% CRPE$_{\text{relation}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & - & 79.2 & 76.4 & 73.6  \\ 
+% HallBench$_{\text{avg}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 58.1 & 55.2 & 52.9 & 46.3  \\ 
+% MTVQA$_{\text{test}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 30.9 & 31.7 & 29.2 & 24.8  \\ 
+% RealWorldQA$_{\text{avg}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 77.8 & 75.7 & 68.5 & 65.4  \\ 
+% MME-RealWorld$_{\text{en}}$  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & - & 63.2 & 57.4 & 53.1  \\ 
+% MM-MT-Bench  & 0.0 & 0.0 & \textbf{0.0} & 0.0 & 6.59 & 7.6 & 6.3 & 5.7  \\ 
+
+\begin{table}[h]
+\centering
+\caption{\textbf{Performance of Qwen2.5-VL and State-of-the-art.}}
+\label{tab:sota_results}
+\setlength{\tabcolsep}{3.0pt}
+\scalebox{0.63}{
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+\textbf{Datasets}  & \makecell{\textbf{Previous} \\ \textbf{Open-source SoTA}} & \makecell{\textbf{Claude-3.5} \\ \textbf{Sonnet-0620}} & \makecell{\textbf{GPT-4o} \\ \textbf{0513}} & \makecell{\textbf{InternVL2.5} \\\textbf{78B}} & \makecell{\textbf{Qwen2-VL} \\ \textbf{72B}} & \makecell{\textbf{Qwen2.5-VL} \\ \textbf{72B}} & \makecell{\textbf{Qwen2.5-VL} \\ \textbf{7B}}  & \makecell{\textbf{Qwen2.5-VL} \\ \textbf{3B}}  \\ 
+\midrule
+\multicolumn{9}{c}{\textit{College-level Problems}} \\
+\midrule
+MMMU$_{\text{val}}$~\citep{yue2023mmmu} & 70.1~\cite{chen2024expanding} & 68.3 & 69.1 & 70.1 & 64.5 & \textbf{70.2} & 58.6 & 53.1  \\ 
+MMMU-Pro$_{\text{overall}}$~\citep{mmmupro} & 48.6~\cite{chen2024expanding} & 51.5 & \textbf{51.9} & 48.6 & 46.2 & 51.1 & 38.3 & 31.56  \\ 
+\midrule
+\multicolumn{9}{c}{\textit{Math}} \\
+\midrule
+MathVista$_{\text{mini}}$~\citep{mathvista}   & 72.3~\cite{chen2024expanding} & 67.7 & 63.8 & 72.3 & 70.5 & \textbf{74.8} & 68.2 & 62.3  \\ 
+MATH-Vision$_{\text{full}}$~\citep{mathvision}   & 32.2~\cite{chen2024expanding} & - & 30.4 & 32.2 & 25.9 & \textbf{38.1} & 25.1 & 21.2  \\    
+MathVerse$_{\text{mini}}$~\citep{zhang2024mathverse}  & 51.7~\cite{chen2024expanding} & - & 50.2 & 51.7 & - & \textbf{57.6} & 49.2 & 47.6  \\ 
+\midrule
+\multicolumn{9}{c}{\textit{General Visual Question Answering}} \\
+\midrule
+MegaBench~\citep{chen2024mega}  & 47.4~\cite{minimax2025minimax01scalingfoundationmodels} & 52.1 & \textbf{54.2} & 45.6 & 46.8 & 51.3 & 36.8 & 28.9  \\ 
+MMBench-EN$_{\text{test}}$~\citep{MMBench}  & 88.3~\cite{chen2024expanding} & 82.6 & 83.4 & 88.3 & 86.9 & \textbf{88.6} & 83.5 & 79.1  \\ 
+MMBench-CN$_{\text{test}}$~\citep{MMBench}  & 88.5~\cite{chen2024expanding} & 83.5 & 82.1 & \textbf{88.5} & 86.7 & 87.9 & 83.4 & 78.1  \\ 
+MMBench-V1.1-EN$_{\text{test}}$~\citep{MMBench}  & 87.4~\cite{chen2024expanding} & 80.9 & 83.1 & 87.4 & 86.1 & \textbf{88.4} & 82.6 & 77.4  \\ 
+MMStar~\citep{chen2024we}     & 69.5~\cite{chen2024expanding} & 65.1 & 64.7 & 69.5 & 68.3 & \textbf{70.8} & 63.9 & 55.9  \\ 
+MME$_{\text{sum}}$~\citep{fu2023mme}  & \textbf{2494}~\cite{chen2024expanding} & 1920 & 2328 & \textbf{2494} & 2483 & 2448 & 2347 & 2157  \\ 
+MuirBench~\citep{wang2024muirbench}  & 63.5~\cite{chen2024expanding} & - & 68.0 & 63.5 & - & \textbf{70.7} & 59.6 & 47.7  \\ 
+BLINK$_{\text{val}}$~\citep{fu2024blink}  & 63.8~\cite{chen2024expanding} & - & \textbf{68.}0 & 63.8 & - & 64.4 & 56.4 & 47.6  \\ 
+CRPE$_{\text{relation}}$~\citep{wang2024allseeing_v2}  & 78.8~\cite{chen2024expanding} & - & 76.6 & 78.8 & - & \textbf{79.2} & 76.4 & 73.6  \\ 
+HallBench$_{\text{avg}}$~\citep{guan2023hallusionbench}  & \textbf{58.1}~\cite{wang2024qwen2} & 55.5 & 55.0 & 57.4 & \textbf{58.1} & 55.2 & 52.9 & 46.3  \\ 
+MTVQA~\citep{tang2024mtvqa}  & \textbf{31.9}~\cite{chen2024expanding} & 25.7 & 27.8 & 31.9 & 30.9 & 31.7 & 29.2 & 24.8  \\ 
+RealWorldQA$_{\text{avg}}$~\citep{grok15}  & 78.7~\cite{chen2024expanding} & 60.1 & 75.4 & \textbf{78.7} & 77.8 & 75.7 & 68.5 & 65.4  \\ 
+MME-RealWorld$_{\text{en}}$~\citep{mme-realworld}  & 62.9~\cite{chen2024expanding} & 51.6 & 45.2 & 62.9 & - & \textbf{63.2} & 57.4 & 53.1  \\ 
+MMVet$_{\text{turbo}}$~\citep{yu2024mm}  & 74.0~\cite{wang2024qwen2} & 70.1 & 69.1 & 72.3 & 74.0 & \textbf{76.2} & 67.1 & 61.8  \\ 
+MM-MT-Bench~\citep{agrawal2024pixtral}  & 7.4~\cite{agrawal2024pixtral} & 7.5 & \textbf{7.72} & - & 6.59 & 7.6 & 6.3 & 5.7  \\ 
+
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+The experimental section evaluates the performance of Qwen2.5-VL across a variety of datasets, comparing it with state-of-the-art models such as Claude-3.5-Sonnet-0620~\citep{sonnet3_5}, GPT-4o-0513~\citep{gpt4o}, InternVL2.5~\citep{chen2024expanding}, and different sizes of Qwen2-VL~\citep{Qwen2-VL}. In college-level problems, Qwen2.5-VL-72B achieves a score of 70.2 on MMMU~\citep{yue2023mmmu}. For MMMU-Pro~\citep{mmmupro}, Qwen2.5-VL-72B scores 51.1, surpassing the previous open-source state-of-the-art models and achieving performance comparable to GPT-4o.
+
+In math-related tasks, Qwen2.5-VL-72B demonstrates strong capabilities. On MathVista~\citep{mathvista}, it achieves a score of 74.8, outperforming the previous open-source state-of-the-art score of 72.3. For MATH-Vision~\citep{mathvision}, Qwen2.5-VL-72B scores 38.1, while MathVerse~\citep{zhang2024mathverse} achieves 57.6, both showing competitive results compared to other leading models.
+
+For general visual question answering, Qwen2.5-VL-72B excels across multiple benchmarks. On MMbench-EN~\citep{MMBench}, it achieves a score of 88.6, slightly surpassing the previous best score of 88.3. The model also performs well in MuirBench~\citep{wang2024muirbench} with a score of 70.7 and BLINK~\citep{fu2024blink} with 64.4. In the multilingual capability evaluation of MTVQA~\citep{tang2024mtvqa}, Qwen2.5-VL-72B achieves a score of 31.7, showcasing its powerful multilingual text recognition abilities. In subjective evaluations such as MMVet~\citep{yu2024mm} and MM-MT-Bench~\citep{agrawal2024pixtral}, Qwen2.5-VL-72B scores 76.2 and 7.6, respectively, demonstrating excellent natural conversational experience and user satisfaction.
+
+

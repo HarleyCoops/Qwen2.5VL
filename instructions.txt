@@ -1,0 +1,35 @@
+We first want to develop a pipeline for extracting understanding from original Arxiv papers TeX source code. Once example is in C:\Users\admin\Qwen2.5VL\OriginalPaper
+
+we have extensive APIs available for tool use and tool building. Some we may get an api error on and need to update. 
+
+for this project we want to connect through Cline using my exising openrouter connection go this model. 
+
+This will be a learnign tool for botht he model itself, but also how to run and conect to the model. I will use my existing hugging face profile to connect to and run this model. 
+
+I amm particularly interested in understanding how to fine tune this model and what kind of dataset would be needed to fine tune a visual model. That is an andvanced topic though. A future focus. 
+
+We will rely heavily on cline and also want to build MCP servers to accomplish some of these tasks. 
+
+Think creatively about a solution where maybe the most efficient solution to a problem is not the best, we want to explore tool use and mcp tool building while we also understand the academic paper of this model but also howto timplement the model from this model card; 
+
+https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct-AWQ
+
+# Use a pipeline as a high-level helper
+from transformers import pipeline
+
+messages = [
+    {"role": "user", "content": "Who are you?"},
+]
+pipe = pipeline("image-text-to-text", model="Qwen/Qwen2.5-VL-7B-Instruct-AWQ")
+pipe(messages)     Copy  # Load model directly
+from transformers import AutoProcessor, AutoModelForImageTextToText
+
+processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct-AWQ")
+model = AutoModelForImageTextToText.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct-AWQ")  
+
+Use your webbrowser tool to access these links: 
+
+@https://huggingface.co/docs/transformers/main/en/model_doc/qwen2_5_vl#transformers.Qwen2_5_VLForConditionalGeneration
+@https://huggingface.co/docs/transformers/main_classes/pipelines
+@https://huggingface.co/learn
+

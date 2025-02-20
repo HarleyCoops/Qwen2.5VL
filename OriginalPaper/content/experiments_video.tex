@@ -1,0 +1,40 @@
+
+We assessed our models across a diverse range of video understanding and grounding tasks, utilizing benchmarks that include videos ranging from a few seconds to several hours in length.
+Table~\ref{tab:video_results} demonstrates the performance comparison between Qwen2.5-VL models and top-tier proprietary models on the following video benchmarks: Video-MME~\citep{fu2024video}, Video-MMMU~\citep{hu2025video}, MMVU~\citep{zhao2025mmvu}, MVBench~\citep{li2024mvbench}, MMBench-Video~\citep{fang2024mmbench}, LongVideoBench~\citep{wu2024longvideobench}, EgoSchema~\citep{mangalam2023egoschema}, PerceptionTest~\citep{patraucean2024perception}, MLVU~\citep{zhou2024mlvu}, LVBench~\citep{wang2024lvbench}, TempCompass~\citep{liu2024tempcompass} and Charades-STA~\citep{gao2017tall}.
+Notably, on LVBench and MLVU, which evaluate long-form video understanding capabilities through question-answering tasks, Qwen2.5-VL-72B achieves remarkable results, significantly outperforming strong competitors such as GPT-4o.
+
+By utilizing the proposed synchronized MRoPE, Qwen2.5-VL enhances its capabilities in time-sensitive video understanding, featuring improved timestamp referencing, temporal grounding, dense captioning, and additional functionalities. On the Charades-STA dataset, which assesses the capability to accurately localize events or activities with precise timestamps, Qwen2.5-VL-72B achieves an impressive mIoU score of 50.9, thereby surpassing the performance of GPT-4o.
+For all evaluated benchmarks, we capped the maximum number of frames analyzed per video at 768, with the total number of video tokens not exceeding 24,576.
+
+\begin{table}[h]
+\centering
+\caption{\textbf{Performance of Qwen2.5-VL and other models on video benchmarks.}}
+\label{tab:video_results}
+% \small
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Datasets}       & \textbf{Gemini 1.5-Pro} & \textbf{GPT-4o} & \textbf{Qwen2.5-VL-72B} & \textbf{Qwen2.5-VL-7B} & \textbf{Qwen2.5-VL-3B} \\ 
+\midrule
+\multicolumn{6}{c}{\textit{Video Understanding Tasks}} \\
+\midrule
+Video-MME$_{\text{w/o\ sub.}}$ & \textbf{75.0} & 71.9 & 73.3 & 65.1 & 61.5  \\ 
+Video-MME$_{\text{w\ sub.}}$   & \textbf{81.3} & 77.2 & 79.1 & 71.6 & 67.6  \\ 
+Video-MMMU                     & 53.9 & \textbf{61.2} & 60.2 & 47.4 & -     \\     
+MMVU$_{\text{val}}$            & 65.4 & \textbf{67.4} & 62.9 & 50.1 & -     \\     
+MVBench                        & 60.5 & 64.6 & \textbf{70.4} & 69.6 & 67.0  \\ 
+MMBench-Video                  & 1.30 & 1.63 & \textbf{2.02} & 1.79 & 1.63  \\ 
+LongVideoBench$_{\text{val}}$  & 64.0 & \textbf{66.7} & 60.7 & 56.0 & 54.2  \\ 
+LVBench                        & 33.1 & 30.8 & \textbf{47.3} & 45.3 & 43.3  \\ 
+EgoSchema$_{\text{test}}$      & 71.2 & 72.2 & \textbf{76.2} & 65.0 & 64.8  \\ 
+PerceptionTest$_{\text{test}}$ & -    & -    & \textbf{73.2} & 70.5 & 66.9  \\ 
+MLVU$_{\text{M-Avg}}$          & -    & 64.6 & \textbf{74.6} & 70.2 & 68.2  \\ 
+TempCompass$_{\text{Avg}}$     & 67.1 & 73.8 & \textbf{74.8} & 71.7 & 64.4  \\ 
+\midrule
+\multicolumn{6}{c}{\textit{Video Grounding Tasks}} \\
+\midrule
+Charades-STA$_{\text{mIoU}}$   & -    & 35.7 & \textbf{50.9} & 43.6 & 38.8  \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
