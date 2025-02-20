@@ -22,3 +22,10 @@ mkdocs>=1.5.2
 mkdocs-material>=9.2.0
 mkdocstrings>=0.24.0
 mkdocstrings-python>=1.7.0
+
+transformers 
+qwen-vl-utils 
+openai 
+requests 
+beautifulsoup4
+tqdm>=4.62.0
