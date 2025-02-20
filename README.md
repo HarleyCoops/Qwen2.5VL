@@ -5,7 +5,7 @@ An educational exploration of the Qwen2.5-VL model, focusing on understanding mo
 
 What shocks me about this model is the advanced capacity to process any data. I am going to use this to build and fine-tune a model on the Blackfeet Language as a use case using an old Dictionary from 1890. 
 
-![Dictionary Sample](public/Dictionary.jpeg)
+![Dictionary Sample](Public/Dictionary.jpeg)
 
 
 
