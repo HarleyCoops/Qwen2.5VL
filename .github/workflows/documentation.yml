@@ -52,12 +52,25 @@ jobs:
         python -m doctest **/*.py
         python -m pydoc -w .
 
+    - name: Fix Markdown Formatting
+      run: |
+        # Run markdown fixer before linting
+        python tools/fix_markdown.py
+        
+        # Stage the fixed files
+        git add .
+        
+        # Commit if there are changes
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git commit -m "Auto-fix markdown formatting" || echo "No markdown fixes needed"
+
     - name: Run markdownlint
       uses: nosborn/github-action-markdown-cli@v3.3.0
       with:
-        files: .
+        files: "**/*.md"
         config: .markdownlint.json
-        ignore: node_modules
+        ignore: "node_modules"
 
     - name: Check Links
       uses: gaurav-nelson/github-action-markdown-link-check@v1
