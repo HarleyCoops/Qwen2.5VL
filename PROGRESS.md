@@ -55,7 +55,6 @@
 ### Current Focus Areas
 
 - GitHub Actions workflow
-- markdown fixer and fix formatting
 
 
 ## Upcoming Tasks
