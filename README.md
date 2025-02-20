@@ -5,7 +5,7 @@ An educational exploration of the Qwen2.5-VL model, focusing on understanding mo
 
 What shocks me about this model is the advanced capacity to process any data. I am going to use this to build and fine-tune a model on the Blackfeet Language as a use case using an old Dictionary from 1890. 
 
-![Dictionary Sample](public/Dictionary.jpegg)
+![Dictionary Sample](public/Dictionary.jpeg)
 
 
 
@@ -186,10 +186,29 @@ Choose your provider based on your specific needs:
   - Model card validators
   - Performance benchmarking
   - Integration testing
+- **Data Tools**:
+  - Dictionary/PDF downloader with progress tracking
+  - File validation and error handling
+  - Automated data organization
 - **Example Scripts**:
   - API interaction examples
   - Processing pipelines
   - Utility functions
+
+### Using the Dictionary Downloader
+```bash
+# Download dictionary or PDF files with progress tracking
+python tools/download_dictionary.py [URL]
+
+# Example:
+python tools/download_dictionary.py https://pubs.usgs.gov/unnumbered/70037986/report.pdf
+```
+
+The downloader features:
+- Progress bar with download speed and ETA
+- Automatic file naming from URL
+- Error handling and validation
+- Organized storage in data/sources
 
 ## Getting Started
 
