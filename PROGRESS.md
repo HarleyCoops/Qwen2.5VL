@@ -56,13 +56,13 @@
 
 - GitHub Actions workflow
 - markdown fixer and fix formatting
-- gitignore to exclude data directory
 
 
 ## Upcoming Tasks
 
 ### Identified Tasks
 
+- Review TODOs in PROGRESS.md
 - Review TODOs in tools/update_progress.py
 
 
