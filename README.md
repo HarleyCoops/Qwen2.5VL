@@ -313,6 +313,176 @@ Our project uses GitHub Actions for automated documentation and development work
    - Detailed error reporting
    - Quick problem identification
 
+## Setting Up Automated Learning Documentation
+
+### 1. Initial Repository Configuration
+
+#### GitHub Permissions Setup
+1. **Enable Actions Write Permissions**:
+   ```
+   Repository Settings → Actions → Workflow permissions:
+   1. Select "Read and write permissions"
+   2. Check "Allow GitHub Actions to create and approve pull requests"
+   3. Click "Save"
+   ```
+
+2. **Generate Access Token**:
+   ```
+   GitHub.com → Profile → Settings → Developer settings:
+   1. Personal access tokens → Tokens (classic)
+   2. Generate new token (classic)
+   3. Name: "Documentation Automation Token"
+   4. Set appropriate expiration
+   5. Select required scopes:
+      ✓ repo (all)
+      ✓ workflow
+      ✓ write:packages
+      ✓ admin:org
+      ✓ admin:repo_hook
+      ✓ admin:org_hook
+      ✓ copilot
+   6. Generate and copy token
+   ```
+
+3. **Configure Repository Secrets**:
+   ```
+   Repository Settings → Secrets and variables → Actions:
+   1. Click "New repository secret"
+   2. Name: COPILOT_TOKEN
+   3. Value: [Your generated token]
+   4. Add secret
+   ```
+
+#### Required Configurations Checklist
+- [ ] Actions write permissions enabled globally
+- [ ] Token generated with all required scopes
+- [ ] COPILOT_TOKEN secret configured
+- [ ] Workflow permissions set in repository
+- [ ] Documentation workflow file present
+- [ ] Node.js setup included in workflow
+
+### 2. Documentation Automation Features
+
+#### Automated Learning Capture
+- **Code Documentation**:
+  - Automated docstring validation
+  - Style consistency checks
+  - Best practices enforcement
+
+- **Progress Tracking**:
+  - Automated PROGRESS.md updates
+  - Milestone documentation
+  - Learning journey capture
+
+- **Knowledge Base**:
+  - Automated documentation site
+  - Cross-referenced learning notes
+  - Searchable knowledge repository
+
+#### Integration Points
+- **GitHub Copilot**:
+  - Real-time documentation suggestions
+  - Code improvement recommendations
+  - Learning pattern recognition
+
+- **Automated Updates**:
+  - PR creation for documentation
+  - Progress tracking updates
+  - Site deployment
+
+### 3. Using the Automation
+
+#### Daily Development Workflow
+1. **Write Code with Learning Notes**:
+   ```python
+   def analyze_image(image_path: str) -> dict:
+       """
+       Analyze image using Qwen2.5-VL.
+       
+       Learning Notes:
+       - Key Concept: Visual encoder with window attention
+       - Understanding: How the model processes images
+       - Reference: Paper section 2.1
+       
+       Implementation:
+       - Uses window attention for efficiency
+       - Handles multiple image formats
+       - Returns structured analysis
+       """
+       # Implementation
+   ```
+
+2. **Commit with Learning Context**:
+   ```bash
+   git commit -m "Add image analysis function:
+   
+   Learning:
+   - Implemented window attention concepts
+   - Explored visual encoder architecture
+   - Referenced paper section 2.1
+   
+   Technical:
+   - Added type hints
+   - Included comprehensive docstrings
+   - Added learning notes"
+   ```
+
+3. **Review Automated Updates**:
+   - Check Actions tab for workflow status
+   - Review generated documentation PRs
+   - Validate learning captures
+
+#### Documentation Patterns
+1. **Code Documentation**:
+   - Include learning notes in docstrings
+   - Reference source materials
+   - Document understanding progress
+
+2. **Progress Tracking**:
+   - Use structured commit messages
+   - Update PROGRESS.md regularly
+   - Tag learning milestones
+
+3. **Knowledge Sharing**:
+   - Contribute to documentation site
+   - Review and refine automated updates
+   - Share learning insights
+
+### 4. Troubleshooting Guide
+
+#### Common Issues
+1. **Permission Problems**:
+   - Verify repository settings
+   - Check token scopes
+   - Confirm secret configuration
+
+2. **Token Issues**:
+   - Validate token expiration
+   - Check scope coverage
+   - Regenerate if needed
+
+3. **Workflow Debugging**:
+   - Enable debug logging
+   - Check Actions tab logs
+   - Verify step outputs
+
+#### Quick Fixes
+1. **Workflow Failures**:
+   ```
+   1. Check Actions tab error message
+   2. Verify permissions in repository settings
+   3. Confirm token validity
+   4. Review workflow file configuration
+   ```
+
+2. **Documentation Updates**:
+   ```
+   1. Verify file paths in workflow
+   2. Check markdown formatting
+   3. Validate documentation structure
+   4. Review PR creation permissions
+   ```
+
 ### Development Workflow
 
 1. **Local Development**
