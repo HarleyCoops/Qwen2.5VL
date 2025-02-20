@@ -22,6 +22,7 @@ This project provides comprehensive access to Qwen2.5-VL through multiple infere
   - Usage-based pricing
 
 - **Setup**:
+
   ```python
   from openrouter import OpenRouter
   client = OpenRouter(api_key="your_key")
@@ -41,6 +42,7 @@ This project provides comprehensive access to Qwen2.5-VL through multiple infere
   - Scalable infrastructure
 
 - **Setup**:
+
   ```python
   from huggingface_hub import InferenceClient
   client = InferenceClient(
@@ -63,6 +65,7 @@ This project provides comprehensive access to Qwen2.5-VL through multiple infere
   - Real-time performance monitoring
 
 - **Setup**:
+
   ```python
   from hyperbolic import HyperbolicClient
   client = HyperbolicClient(
@@ -87,6 +90,7 @@ This project provides comprehensive access to Qwen2.5-VL through multiple infere
   - Custom container support
 
 - **Setup**:
+
   ```python
   import runpod
   runpod.api_key = "your_key"
@@ -101,6 +105,7 @@ This project provides comprehensive access to Qwen2.5-VL through multiple infere
   - Extensive model selection
 
 - **Setup**:
+
   ```python
   import together
   together.api_key = "your_key"
@@ -115,6 +120,7 @@ This project provides comprehensive access to Qwen2.5-VL through multiple infere
   - Enterprise-grade security
 
 - **Setup**:
+
   ```python
   from anyscale import AnyscaleClient
   client = AnyscaleClient(api_key="your_key")
@@ -128,6 +134,7 @@ This project provides comprehensive access to Qwen2.5-VL through multiple infere
   - Webhook support
 
 - **Setup**:
+
   ```python
   import replicate
   client = replicate.Client(api_token="your_token")
@@ -683,6 +690,7 @@ The system automatically:
   4. Commit with detailed explanations
 
 - **Documentation Patterns**
+
   ```python
   # Example of documentation pattern:
 
@@ -756,6 +764,7 @@ The system automatically:
    - Navigate to: Repository → Settings → Secrets and Variables → Actions
    - Click "New repository secret"
    - Add secrets:
+
      ```
 
      Name: COPILOT_TOKEN
