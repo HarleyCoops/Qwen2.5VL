@@ -29,11 +29,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
     - name: Setup GitHub Copilot CLI
       run: |
         npm install -g @githubnext/github-copilot-cli
+        npm install -g @githubnext/github-copilot-cli-core
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.COPILOT_TOKEN }}
 
     - name: Check Documentation Coverage
       run: |
@@ -47,7 +53,8 @@ jobs:
         gh copilot suggest "Review and improve documentation in:"
         find . -type f -name "*.py" -exec gh copilot suggest "Improve documentation in {}" \;
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+        COPILOT_TOKEN: ${{ secrets.COPILOT_TOKEN }}
 
     - name: Validate Model Cards
       run: |
