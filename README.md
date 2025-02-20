@@ -3,6 +3,12 @@
 ## Overview
 An educational exploration of the Qwen2.5-VL model, focusing on understanding model cards, implementation details, and practical applications. This project combines academic research with hands-on implementation guides and integrates with multiple inference providers for comprehensive access to the model.
 
+What shocks me about this model is the advanced capacity to process any data. I am going to use this to build and fine-tune a model on the Blackfeet Language as a use case using an old Dictionary from 1890. 
+
+![Dictionary Sample](public/Dictionary.jpegg)
+
+
+
 ### Inference Providers Integration
 
 This project provides comprehensive access to Qwen2.5-VL through multiple inference providers, each offering unique capabilities and advantages:
@@ -326,6 +332,115 @@ Our project uses GitHub Actions for automated documentation and development work
    - Update PROGRESS.md
    - Add docstrings to code
    - Review automated suggestions
+
+## Learning Process Automation
+
+### GitHub Copilot Integration
+- **Automated Code Documentation**
+  - Real-time documentation suggestions
+  - Context-aware code explanations
+  - Best practices enforcement
+
+- **Learning Workflow**
+  1. Write initial code/comments
+  2. Trigger Copilot suggestions (`Ctrl+Enter` on code blocks)
+  3. Review and refine documentation
+  4. Commit with detailed explanations
+
+- **Documentation Patterns**
+  ```python
+  # Example of documentation pattern:
+  def process_image(image_data):
+      """
+      Process image using Qwen2.5-VL model.
+      
+      Learning Notes:
+      - Understanding: How the model processes visual input
+      - Key Concept: Window attention in visual encoder
+      - Reference: Section 2.1 of paper
+      
+      Implementation Details:
+      - Uses window attention for efficient processing
+      - Handles multiple image formats
+      - Integrates with OpenRouter API
+      
+      Args:
+          image_data: Raw image data or path to image file
+          
+      Returns:
+          dict: Processed results including analysis and metadata
+      """
+      pass
+  ```
+
+### Automated Updates
+- **Daily Documentation Summaries**
+  - Automated PR creation with documentation improvements
+  - Learning progress tracking in PROGRESS.md
+  - Knowledge base updates based on code changes
+
+- **Integration with GitHub Actions**
+  - Automated documentation checks
+  - Code quality verification
+  - Learning progress visualization
+
+## GitHub Secrets Configuration
+
+### Required Secrets
+1. **COPILOT_TOKEN**
+   - Purpose: Enable automated documentation suggestions
+   - Scope: Repository-level
+   - Permission: Copilot access
+   - Usage: Powers automated documentation improvements
+
+2. **GITHUB_TOKEN**
+   - Purpose: Workflow automation
+   - Scope: Automatically provided by GitHub Actions
+   - Permission: Workflow operations
+   - Usage: Repository operations and PR creation
+
+### Setup Instructions
+
+1. **Generate Personal Access Token**:
+   - Visit GitHub Settings → Developer Settings
+   - Select Personal Access Tokens → Tokens (classic)
+   - Enable required scopes:
+     - `copilot` (for documentation suggestions)
+     - `workflow` (for GitHub Actions)
+     - `repo` (for repository access)
+   - Copy the generated token
+
+2. **Add Repository Secrets**:
+   - Navigate to: Repository → Settings → Secrets and Variables → Actions
+   - Click "New repository secret"
+   - Add secrets:
+     ```
+     Name: COPILOT_TOKEN
+     Value: [your generated token]
+     ```
+
+3. **Verify Configuration**:
+   - Check Actions tab for workflow status
+   - Confirm Copilot suggestions in PRs
+   - Monitor documentation updates
+   - Review automated commits
+
+### Troubleshooting
+
+1. **Workflow Failures**:
+   - Check Actions tab for error messages
+   - Verify secret accessibility
+   - Confirm workflow permissions
+
+2. **Copilot Integration Issues**:
+   - Verify token has correct scopes
+   - Check token expiration
+   - Review workflow logs
+
+3. **Documentation Updates**:
+   - Confirm branch permissions
+   - Check PR creation permissions
+   - Verify markdown formatting
 
 ## Contributing
 
