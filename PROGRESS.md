@@ -54,8 +54,6 @@
 
 ### Current Focus Areas
 
-- GitHub Actions workflow
-
 
 ## Upcoming Tasks
 
