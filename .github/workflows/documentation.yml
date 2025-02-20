@@ -1,39 +1,135 @@
-name: Learning Documentation Update
+name: Documentation Automation
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Every 15 minutes
-  workflow_dispatch:         # Manual trigger option
+    - cron: '*/15 * * * *'  # Run every 15 minutes
+  workflow_dispatch:         # Manual trigger
+  push:
+    branches: [ main ]      # Push trigger
+  pull_request:
+    branches: [ main ]      # PR trigger
 
 jobs:
-  document:
+  auto_update:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
+      pull-requests: write
+      issues: write
+      actions: write
+    environment: production
+    env:
+      ACTIONS_STEP_DEBUG: true
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0     # Get full history for better documentation
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0     # Get full history for better documentation
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Update Progress Tracking
+      run: |
+        # Update PROGRESS.md with new changes
+        python tools/update_progress.py
+
+    - name: Validate Model Cards
+      run: |
+        # Run model card validator
+        python tools/validators/model_card_validator.py implementation/model_cards/*.md
+
+    - name: Check Documentation
+      run: |
+        # Check for docstrings and documentation
+        python -m doctest **/*.py
+        python -m pydoc -w .
+
+    - name: Run markdownlint
+      uses: nosborn/github-action-markdown-cli@v3.3.0
+      with:
+        files: .
+        config: .markdownlint.json
+        ignore: node_modules
+
+    - name: Check Links
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'yes'
+        use-verbose-mode: 'yes'
+        folder-path: '.'
+
+    - name: Auto-commit Changes
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        
+        # Get timestamp for commit message
+        TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+        
+        # Stage all changes
+        git add .
+        
+        # Commit with detailed message
+        git commit -m "Auto-update documentation: $TIMESTAMP
+
+        Updates:
+        - Track learning progress
+        - Update documentation
+        - Validate model cards
+        - Check markdown quality
+        - Verify documentation links" || echo "No changes to commit"
+        
+        # Push changes
+        git push
+
+    - name: Create Documentation PR
+      uses: peter-evans/create-pull-request@v5
+      with:
+        commit-message: "docs: Auto-update documentation"
+        title: "Documentation Updates"
+        body: |
+          Automated documentation update.
           
-      - name: Update and Push Changes
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
+          Changes include:
+          - Progress tracking updates
+          - Documentation improvements
+          - Model card validations
+          - Link checks
           
-          # Get timestamp for commit message
-          TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
-          
-          # Add all changes
-          git add .
-          
-          # Commit with detailed message including timestamp
-          git commit -m "Learning Progress Update: $TIMESTAMP
-          
-          Documentation Updates:
-          - Updated README and learning notes
-          - Tracked progress in Qwen2.5-VL understanding
-          - Captured new insights and examples" || echo "No changes to commit"
-          
-          # Push changes
-          git push
+          Please review the changes.
+        branch: docs/auto-updates
+        delete-branch: true
+        labels: documentation
+
+    - name: Generate Documentation Site
+      run: |
+        # Build documentation site
+        mkdocs build
+      if: github.event_name == 'push' || github.event_name == 'schedule'
+
+    - name: Deploy Documentation
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
+      if: github.event_name == 'push' || github.event_name == 'schedule'
+
+    - name: Notify on Failure
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Documentation Workflow Failed',
+            body: 'The documentation automation workflow has failed. Please check the logs for more details.'
+          })
