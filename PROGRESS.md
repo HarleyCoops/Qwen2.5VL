@@ -54,6 +54,7 @@
 
 ### Current Focus Areas
 
+
 ## Hyperbolic Integration Roadmap
 
 The following steps outline the plan to integrate Qwen2.5BVL via Hyperbolic:
@@ -84,6 +85,7 @@ The following steps outline the plan to integrate Qwen2.5BVL via Hyperbolic:
 
 - Review TODOs in PROGRESS.md
 - Review TODOs in tools/update_progress.py
+
 
 ## Learning Objectives
 
