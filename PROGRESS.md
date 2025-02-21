@@ -55,8 +55,6 @@
 
 ### Current Focus Areas
 
-- documentation workflow
-
 
 ## Hyperbolic Integration Roadmap
 
