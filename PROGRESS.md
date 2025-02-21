@@ -49,10 +49,13 @@
 - [x] Dictionary image path in README
 - [x] README with dictionary downloader documentation
 - [x] dictionary downloader and update dependencies
+- [x] documentation workflow
 
 ## Current Development Focus
 
 ### Current Focus Areas
+
+- documentation workflow
 
 
 ## Hyperbolic Integration Roadmap
