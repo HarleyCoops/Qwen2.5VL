@@ -353,27 +353,33 @@ Make sure to configure the following environment variables:
 This section outlines the step-by-step pipeline for integrating Qwen2.5-VL with various inference providers, ensuring robust, automated, and continuous deployment.
 
 ### 1. Environment Setup
+
 - Install required client packages (e.g., via pip for Hyperbolic, Hugging Face, etc.).
 - Configure environment variables (e.g., HYPERBOLIC_API_KEY, HYPERBOLIC_ENDPOINT, HF_API_KEY).
 
 ### 2. Connection Module Development
+
 - Develop dedicated modules for each provider (e.g., hyperbolic_connection.py, openrouter_integration.py).
 - Implement connection tests, detailed error handling, and logging to capture API responses and failures.
 
 ### 3. Testing and Verification
+
 - Write test scripts to verify connectivity and proper API responses (refer to implementation/examples/ for examples).
 - Integrate these tests in the CI/CD pipeline to automatically validate deployments.
 
 ### 4. Integration with Qwen2.5-VL Workflow
+
 - Combine provider-specific modules under a unified interface to simplify inference requests.
 - Abstract provider details so that switching backends requires minimal code changes.
 
 ### 5. CI/CD and Automated Monitoring
+
 - Embed integration tests into GitHub Actions workflows to trigger on code push and pull requests.
 - Monitor API performance and error tracking to ensure seamless inference service.
 - Automate documentation updates and PR generation based on test outcomes.
 
 ### 6. Future Enhancements
+
 - Expand support to additional providers as needed (e.g., Together AI, Anyscale, Replicate).
 - Optimize performance, security, and cost management across providers.
 - Continuously review and update documentation based on integration progress and user feedback.
@@ -915,4 +921,5 @@ MIT License
 - Community contributors
 
 ## Project Progress
+
 For a detailed list of modules and their implementation status, please refer to [PROGRESS.md](./PROGRESS.md) and `instructions.txt` for setup and usage guidance.

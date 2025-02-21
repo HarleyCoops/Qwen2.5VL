@@ -89,7 +89,9 @@ The following steps outline the plan to integrate Qwen2.5BVL via Hyperbolic:
 - Review TODOs in PROGRESS.md
 - Review TODOs in tools/update_progress.py
 
+
 ## Modules Checklist
+
 - [ ] Dakota_Extraction.py (Basic extraction functionality; integration pending)
 - [ ] DakotaLatex (Clean preamble and remove duplicate package imports)
 - [ ] hyperbolic_chat_connection.py (Review connection handling and error logging)
@@ -98,6 +100,7 @@ The following steps outline the plan to integrate Qwen2.5BVL via Hyperbolic:
 - [ ] openrouter_integration.py (Connect and test OpenRouter API queries)
 
 ## Remaining Tasks
+
 - Update usage documentation for each module
 - Provide example outputs and logs
 - Validate integration with external data sources
