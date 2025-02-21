@@ -12,26 +12,6 @@ What shocks me about this model is the advanced capacity to process any data. I 
 
 This project provides comprehensive access to Qwen2.5-VL through multiple inference providers, each offering unique capabilities and advantages:
 
-#### OpenRouter Integration
-
-- **Description**: Primary gateway for accessing Qwen2.5-VL and other leading models
-
-- **Key Features**:
-  - Unified API access to multiple models
-  - Automatic fallback and load balancing
-  - Usage-based pricing
-
-- **Setup**:
-
-  ```python
-  from openrouter import OpenRouter
-  client = OpenRouter(api_key="your_key")
-  response = client.chat.completions.create(
-      model="qwen/qwen2.5-vl",
-      messages=[{"role": "user", "content": "Analyze this image", "images": ["<image_url>"]}]
-  )
-  ```
-
 #### Hugging Face Inference Endpoints
 
 - **Description**: Direct access to Qwen2.5-VL through Hugging Face's infrastructure
@@ -146,7 +126,6 @@ Choose your provider based on your specific needs:
 
 1. **Development & Testing**
 
-   - OpenRouter: Best for quick starts and testing
    - Replicate: Good for experimentation
 
 2. **Production Deployment**
@@ -206,7 +185,7 @@ Choose your provider based on your specific needs:
   - Best practices
   - Validation methods
 
-- **OpenRouter Integration**:
+- **hyperbolic.xyz Integration**:
   - API setup guides
   - Authentication handling
   - Request/Response patterns
@@ -267,7 +246,6 @@ The downloader features:
 - Git
 
 - API access to one or more providers:
-  - OpenRouter API key
   - Hugging Face API key
   - Hyperbolic AI API key
   - Additional provider API keys as needed
@@ -296,6 +274,18 @@ cp .env.template .env
 
 # Edit .env with your API keys
 
+```
+
+## Connecting to Qwen2.5B via Hugging Face Credentials
+
+Use the existing Hugging Face credentials to connect to Qwen2.5B:
+
+```python
+from transformers import pipeline
+# use_auth_token flag leverages your existing Hugging Face credentials (set in your environment)
+pipe = pipeline("image-text-to-text", model="qwen/qwen2.5B", use_auth_token=True)
+messages = [{"role": "user", "content": "Who are you?"}]
+print(pipe(messages))
 ```
 
 ## Project Goals

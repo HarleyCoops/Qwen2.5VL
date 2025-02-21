@@ -33,3 +33,4 @@ Use your webbrowser tool to access these links:
 @https://huggingface.co/docs/transformers/main_classes/pipelines
 @https://huggingface.co/learn
 
+We want to pivot away from the Dakota extraction for a minute and focus on getting our IDE setup to work with openrouter for qwen2.5vl access then we want to make sure we can connect to all the inference providers mentioned ussing the hugging face keys we have set up. 
