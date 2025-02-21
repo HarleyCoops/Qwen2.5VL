@@ -13,8 +13,8 @@ def encode_image(img):
 
 
 if __name__ == '__main__':
-    # Load an example image. Update the path as needed.
-    image_path = "data/sources/Images/report_reduced_Page_001.jpg"
+    # Load the target image file for generating LaTeX conversion
+    image_path = "data/sources/Images/report_reduced_Page_011.jpg"
     try:
         img = Image.open(image_path)
     except Exception as e:
@@ -31,23 +31,21 @@ if __name__ == '__main__':
         "Authorization": f"Bearer {api_key}",
     }
 
+    # Prepare payload with the complex instruction for LaTeX formatting
     payload = {
         "messages": [
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "What is this image?"},
-                    {
-                        "type": "image_url",
-                        "image_url": {"url": f"data:image/jpeg;base64,{base64_img}"},
-                    },
-                ],
+                    {"type": "text", "text": "Return a fully formatted LaTeX version of this file: C:/Users/admin/Qwen2.5VL/data/sources/Images/report_reduced_Page_011.jpg. Do not include any commentary outside of the LaTeX code."},
+                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_img}"}}
+                ]
             }
         ],
         "model": "Qwen/Qwen2-VL-72B-Instruct",
         "max_tokens": 2048,
         "temperature": 0.7,
-        "top_p": 0.9,
+        "top_p": 0.9
     }
 
     try:
