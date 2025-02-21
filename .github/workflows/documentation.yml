@@ -2,7 +2,7 @@ name: Documentation Automation
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Run every 15 minutes
+    - cron: '0 * * * *'  # Run once per hour
   workflow_dispatch:         # Manual trigger
   push:
     branches: [ main ]      # Push trigger
