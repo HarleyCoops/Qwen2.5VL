@@ -54,6 +54,29 @@
 
 ### Current Focus Areas
 
+## Hyperbolic Integration Roadmap
+
+The following steps outline the plan to integrate Qwen2.5BVL via Hyperbolic:
+
+1. Environment Setup:
+   - Install the Hyperbolic client package (e.g., via `pip install hyperbolic`).
+   - Configure environment variables: `HYPERBOLIC_API_KEY` and (optionally) `HYPERBOLIC_ENDPOINT`.
+
+2. Develop Connection Module:
+   - Create a dedicated module to initialise and test connectivity with Hyperbolic.
+   - Implement error handling and logging for API calls.
+
+3. Testing and Verification:
+   - Write test scripts (such as in `implementation/examples/hyperbolic_connection.py`) to list available models.
+   - Confirm successful connection and proper error reporting.
+
+4. Integration into Qwen2.5BVL Workflow:
+   - Integrate the connection module with the main application to enable model inference.
+   - Update documentation (README.md) with Hyperbolic integration instructions.
+
+5. Future Enhancements:
+   - Explore performance monitoring and additional API functionalities offered by Hyperbolic.
+   - Schedule automated connection tests as part of CI/CD.
 
 ## Upcoming Tasks
 
@@ -61,7 +84,6 @@
 
 - Review TODOs in PROGRESS.md
 - Review TODOs in tools/update_progress.py
-
 
 ## Learning Objectives
 
