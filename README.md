@@ -288,6 +288,36 @@ messages = [{"role": "user", "content": "Who are you?"}]
 print(pipe(messages))
 ```
 
+## Multi-Provider Inference Connector
+
+The project now includes a unified inference connector that allows access to multiple inference providers (Hugging Face, OpenRouter, and Hyperbolic). This connector reads API keys and endpoints from environment variables, and provides an easy interface to perform inference tasks.
+
+### Usage Example
+
+```python
+from implementation.inference_connector import InferenceConnector
+
+connector = InferenceConnector()
+result = connector.infer('huggingface', 'Who are you?')
+print(result)
+```
+
+### Providers
+
+- **Hugging Face**: Uses the `transformers` package to perform image-text-to-text inference. Ensure the `HF_API_KEY` environment variable is set and the `transformers` package is installed.
+- **OpenRouter**: For inference using OpenRouter. Set `OPENROUTER_API_KEY` and `OPENROUTER_ENDPOINT` in your environment.
+- **Hyperbolic**: For inference using Hyperbolic. Set `HYPERBOLIC_API_KEY` and `HYPERBOLIC_ENDPOINT` in your environment.
+
+### Environment Variables
+
+Make sure to configure the following environment variables:
+
+- HF_API_KEY
+- OPENROUTER_API_KEY
+- OPENROUTER_ENDPOINT
+- HYPERBOLIC_API_KEY
+- HYPERBOLIC_ENDPOINT
+
 ## Project Goals
 
 1. **Educational Understanding**
@@ -317,6 +347,36 @@ print(pipe(messages))
    - Performance benchmarking across providers
    - Cost optimization strategies
    - Advanced use case implementations
+
+## Integration Pipeline
+
+This section outlines the step-by-step pipeline for integrating Qwen2.5-VL with various inference providers, ensuring robust, automated, and continuous deployment.
+
+### 1. Environment Setup
+- Install required client packages (e.g., via pip for Hyperbolic, Hugging Face, etc.).
+- Configure environment variables (e.g., HYPERBOLIC_API_KEY, HYPERBOLIC_ENDPOINT, HF_API_KEY).
+
+### 2. Connection Module Development
+- Develop dedicated modules for each provider (e.g., hyperbolic_connection.py, openrouter_integration.py).
+- Implement connection tests, detailed error handling, and logging to capture API responses and failures.
+
+### 3. Testing and Verification
+- Write test scripts to verify connectivity and proper API responses (refer to implementation/examples/ for examples).
+- Integrate these tests in the CI/CD pipeline to automatically validate deployments.
+
+### 4. Integration with Qwen2.5-VL Workflow
+- Combine provider-specific modules under a unified interface to simplify inference requests.
+- Abstract provider details so that switching backends requires minimal code changes.
+
+### 5. CI/CD and Automated Monitoring
+- Embed integration tests into GitHub Actions workflows to trigger on code push and pull requests.
+- Monitor API performance and error tracking to ensure seamless inference service.
+- Automate documentation updates and PR generation based on test outcomes.
+
+### 6. Future Enhancements
+- Expand support to additional providers as needed (e.g., Together AI, Anyscale, Replicate).
+- Optimize performance, security, and cost management across providers.
+- Continuously review and update documentation based on integration progress and user feedback.
 
 ## Automated Documentation & Development
 
@@ -853,3 +913,6 @@ MIT License
 - OpenRouter platform
 
 - Community contributors
+
+## Project Progress
+For a detailed list of modules and their implementation status, please refer to [PROGRESS.md](./PROGRESS.md) and `instructions.txt` for setup and usage guidance.
